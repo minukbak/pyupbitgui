@@ -6,24 +6,24 @@ import json
 import pprint
 
 # Calculate The Moving Average
-def get_ma(ticker, timInt, cnt):
-    df = pyupbit.get_ohlcv(ticker, timInt, cnt+1)
-    ma = df['close'].rolling(cnt).mean().iloc[-2]
-    return ma
+def calMvAvg(ticker, timIntv, cnt):
+  df = pyupbit.get_ohlcv(ticker, timIntv, cnt+1)
+  mvAvg = df['close'].rolling(cnt).mean().iloc[-2]
+  return mvAvg
 
 # Condition of Buying
-def condxBuy(ticker, interval, MA1, MA2):
-  valueMA1 = calMvAvg(ticker, interval, MA1)
-  valueMA2 = calMvAvg(ticker, interval, MA2)
-  if valueMA1 >= valueMA2:
+def condxBuy(ticker, timIntv, mvAvg1, mvAvg2):
+  calMvAvg1 = calMvAvg(ticker, timIntv, mvAvg1)
+  calMvAvg2 = calMvAvg(ticker, timIntv, mvAvg2)
+  if calMvAvg1 >= calMvAvg2:
     return True
   return False
 
 # Condition of Selling
-def condxSell(ticker, interval, MA1, MA2):
-  valueMA1 = calMvAvg(ticker, interval, MA1)
-  valueMA2 = calMvAvg(ticker, interval, MA2)
-  if valueMA1 <= valueMA2:
+def condxSell(ticker, timIntv, mvAvg1, mvAvg2):
+  calMvAvg1 = calMvAvg(ticker, timIntv, mvAvg1)
+  calMvAvg2 = calMvAvg(ticker, timIntv, mvAvg2)
+  if calMvAvg1 <= calMvAvg2:
     return True
   return False
 
