@@ -6,12 +6,10 @@ import json
 import pprint
 
 # Calculate The Moving Average
-def calMvAvg(ticker, interval, amount):
-  avg = 0
-  df = pyupbit.get_ohlcv(ticker, interval)
-  for i in range(-1-amount, -1):
-    avg += (df.iloc[i]['close'] / amount)
-  return avg
+def get_ma(ticker, timInt, cnt):
+    df = pyupbit.get_ohlcv(ticker, timInt, cnt+1)
+    ma = df['close'].rolling(cnt).mean().iloc[-2]
+    return ma
 
 # Condition of Buying
 def condxBuy(ticker, interval, MA1, MA2):
