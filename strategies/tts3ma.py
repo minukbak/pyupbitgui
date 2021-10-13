@@ -40,9 +40,11 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
 
-  while True:
-    now = datetime.datetime.now().strftime("%H:%M:%S")
+  startTime = datetime.datetime.now()
+  print("autotrade start - " + startTime.strftime("%H:%M:%S"))
+  elapsedTime = (datetime.datetime.now() - startTime)
 
+  while True:
     # 시작 동시 매수 방지: Sell condition은 MA1 <= MA2 이고 이 상태에서는 매수되지 않음
     if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
       operMode = True
@@ -51,8 +53,8 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
     # 해당 코인을 가지고 있고, 매도 조건이 True일 때
     if holding is True and operMode is True:
       if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
-        balTicker = upbit.get_balance(ticker)
-        resp = upbit.sell_market_order(ticker, balTicker)
+        tickBalance = upbit.get_balance(ticker)
+        resp = upbit.sell_market_order(ticker, tickBalance)
         holding = False
         pprint.pprint(resp)
 
@@ -64,7 +66,10 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
         holding = True
         pprint.pprint(resp)
 
+    elapsedTime = (datetime.datetime.now() - startTime)
+
     # 상태 출력
-    print(f"현재시간 {now} / 적용코인: {ticker} / 적용MA: ({mvAvg1}, {mvAvg2}) / 보유상태: {holding}")
+    print(f"{ticker} - MA:({mvAvg1}, {mvAvg2})")
+    print(f"보유: {holding}, 경과: {elapsedTime}")
 
     time.sleep(1)
