@@ -27,6 +27,13 @@ def condxSell(ticker, timIntv, mvAvg1, mvAvg2):
     return True
   return False
 
+# First ask quote (시장가 매수 시 체결 위치 / 매도 1 호가)
+def getMarketBuyPrice(ticker):
+  return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["ask_price"]
+# First bid quote (시장가 매도 시 체결 위치 / 매수 1 호가)
+def getMarketSellPrice(ticker):
+  return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
+
 with open('config.json', 'r') as conf:
   config = json.load(conf)
 
@@ -40,7 +47,11 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
   strtBalance = amount # 시작 잔고
+  endBalance = strtBalance # 끝 잔고
   tikrBalance = 0.0 # 코인 잔고
+  buyPrice = 0.0 # 매수가
+  sellPrice = 0.0 # 매도가
+  curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
@@ -64,21 +75,27 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
       if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
         tikrBalance = upbit.get_balance(ticker)
         resp = upbit.sell_market_order(ticker, tikrBalance)
+        sellPrice = getMarketSellPrice(ticker)
+        endBalance = (tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee)
         holding = False
-        pprint.pprint(resp)
+        print("매도 발생 - 매도가:", sellPrice, "매도 총액:", round(endBalance))
+        print("매도 주문 번호:", resp['uuid'])
 
     # 매수
     # 해당 코인을 가지고 있지 않고, 매수 조건이 True일 때
     if holding is False and operMode is True:
       if condxBuy(ticker, timIntv, mvAvg1, mvAvg2) is True:
         resp = upbit.buy_market_order(ticker, amount)
+        buyPrice = getMarketBuyPrice(ticker)
         holding = True
-        pprint.pprint(resp)
+        print("매수 발생 - 매수가:", buyPrice, "매수 총액:", round(endBalance))
+        print("매수 주문 번호:", resp['uuid'])
 
     elapsedTime = (datetime.datetime.now() - startTime)
+    curPrice = pyupbit.get_current_price(ticker)
 
     # 상태 출력
-    print(f"{ticker} - MA:({mvAvg1}, {mvAvg2})")
-    print(f"보유: {holding}, 경과: {elapsedTime}")
+    print(f"{ticker} - MA:({mvAvg1}, {mvAvg2}) - 투자금: {strtBalance}원")
+    print(f"현재가: {curPrice}원, 보유: {holding}, 경과: {elapsedTime}")
 
     time.sleep(1)
