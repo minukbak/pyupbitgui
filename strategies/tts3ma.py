@@ -54,6 +54,12 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
 
+  # 프로그램 적용 코인 설정 오류 시 종료
+  tickers = pyupbit.get_tickers(fiat="KRW")
+  if ticker not in tickers:
+    print("존재하지 않는 ticker입니다. (ex 비트코인 ticker: KRW-BTC)")
+    exit()
+
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   balance = upbit.get_balance("KRW")
   if (strtBalance * (1.0 - fee)) > balance:
