@@ -39,6 +39,15 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
+  strtBalance = amount # 시작 잔고
+  tikrBalance = 0.0 # 코인 잔고
+  fee = 0.0005 # 수수료
+
+  # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
+  balance = upbit.get_balance("KRW")
+  if (strtBalance * (1.0 - fee)) > balance:
+    print("시작 금액이 부족합니다. ( 최대 가능 금액:", "{:,}".format(round(balance)), ")")
+    exit()
 
   startTime = datetime.datetime.now()
   print("autotrade start - " + startTime.strftime("%H:%M:%S"))
@@ -53,8 +62,8 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
     # 해당 코인을 가지고 있고, 매도 조건이 True일 때
     if holding is True and operMode is True:
       if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
-        tickBalance = upbit.get_balance(ticker)
-        resp = upbit.sell_market_order(ticker, tickBalance)
+        tikrBalance = upbit.get_balance(ticker)
+        resp = upbit.sell_market_order(ticker, tikrBalance)
         holding = False
         pprint.pprint(resp)
 
