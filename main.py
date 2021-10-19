@@ -43,9 +43,14 @@ menu.add_cascade(label="서식")
 menu.add_cascade(label="보기")
 menu.add_cascade(label="도움말")
 
-# 본문 영역
-txt = Text(root)
+# 스크롤 바
+scrollbar = Scrollbar(root)
+scrollbar.pack(side="right", fill="y")
+
+# 로그 영역
+txt = Text(root, yscrollcommand=scrollbar.set)
 txt.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txt.yview)
 
 root.config(menu=menu)
 
