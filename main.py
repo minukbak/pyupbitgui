@@ -49,7 +49,7 @@ scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
 txt = Text(root, yscrollcommand=scrollbar.set)
-txt.pack(side="left", fill="both", expand=True)
+txt.pack(side="left", fill="both", expand=True, padx=5, pady=5) # pad 간격 띄우기
 scrollbar.config(command=txt.yview)
 
 root.config(menu=menu)
