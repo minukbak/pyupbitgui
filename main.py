@@ -13,7 +13,7 @@ amount = 10000 # 프로그램 시작 금액
 
 root = Tk()
 root.title("UpbitAuto")
-root.geometry("640x480") # 가로 * 세로 (+ x좌표 + y좌표)
+root.geometry("640x480+100+100") # 가로 * 세로 + x좌표 + y좌표
 
 # 로그 기록 파일
 filename = "log.txt"
@@ -30,18 +30,21 @@ def save_file():
 
 menu = Menu(root)
 
+# 파일
 menu_file = Menu(menu, tearoff=0)
-menu_file.add_command(label="열기", command=open_file)
-menu_file.add_command(label="저장", command=save_file)
+menu_file.add_command(label="Open File...", command=open_file)
 menu_file.add_separator()
-menu_file.add_command(label="끝내기", command=root.quit)
-menu.add_cascade(label="파일", menu=menu_file)
+menu_file.add_command(label="Save", command=save_file)
+menu_file.add_separator()
+menu_file.add_command(label="Exit", command=root.quit)
+menu.add_cascade(label="File", menu=menu_file)
 
-# 편집, 서식, 보기, 도움말
-menu.add_cascade(label="편집")
-menu.add_cascade(label="서식")
-menu.add_cascade(label="보기")
-menu.add_cascade(label="도움말")
+# 도움말
+menu_help = Menu(menu, tearoff=0)
+menu_help.add_command(label="Welcome")
+menu_help.add_separator()
+menu_help.add_command(label="About")
+menu.add_cascade(label="Help", menu=menu_help)
 
 # 스크롤 바
 scrollbar = Scrollbar(root)
@@ -49,9 +52,11 @@ scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
 txt = Text(root, yscrollcommand=scrollbar.set)
+txt.configure(state='disabled')
 txt.pack(side="left", fill="both", expand=True, padx=5, pady=5) # pad 간격 띄우기
 scrollbar.config(command=txt.yview)
 
 root.config(menu=menu)
 
+root.resizable(False, False)
 root.mainloop()
