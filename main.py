@@ -46,17 +46,42 @@ menu_help.add_separator()
 menu_help.add_command(label="About")
 menu.add_cascade(label="Help", menu=menu_help)
 
+# Option Frame
+frame_option = Frame(root)
+frame_option.pack(padx=5, pady=5, ipady=5)
+
+# Ticker Option
+
+# TimIntv Option
+
+# MvAvg Option
+
+# Amount Option & Save Button
+
 # Log Frame
-log_frame = Frame(root)
-log_frame.pack(fill="both", padx=5, pady=5)
+frame_log = Frame(root)
+frame_log.pack(fill="both", padx=5, pady=5)
+
 # 스크롤 바
-scrollbar = Scrollbar(log_frame)
+scrollbar = Scrollbar(frame_log)
 scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
-log_file = Text(log_frame, height=15, yscrollcommand=scrollbar.set)
+log_file = Text(frame_log, height=15, yscrollcommand=scrollbar.set)
 log_file.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=log_file.yview)
+
+# Result Frame
+result_frame = Frame(root)
+result_frame.pack(fill="both", padx=5, pady=5)
+
+# Execute Frame
+frame_execute = Frame(root)
+frame_execute.pack(fill="x", padx=5, pady=5)
+
+# Start Button
+
+# End Button
 
 root.config(menu=menu)
 
