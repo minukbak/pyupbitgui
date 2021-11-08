@@ -86,8 +86,13 @@ frame_execute = Frame(root)
 frame_execute.pack(fill="x", padx=5, pady=5)
 
 # Start Button
+btn_start = Button(frame_execute, padx=5, pady=5, width=12, text="Start")
+btn_start.pack(side="left")
 
 # End Button
+btn_end = Button(frame_execute, padx=5, pady=5, width=12, text="End")
+btn_end.pack(side="right")
+
 
 root.config(menu=menu)
 
