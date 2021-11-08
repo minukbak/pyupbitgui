@@ -1,4 +1,5 @@
 import os
+import tkinter.ttk as ttk
 from tkinter import *
 
 from strategies import tts3ma
@@ -50,13 +51,42 @@ menu.add_cascade(label="Help", menu=menu_help)
 frame_option = Frame(root)
 frame_option.pack(padx=5, pady=5, ipady=5)
 
-# Ticker Option
+# 1. Ticker Option
+# Ticker Label
+lbl_ticker = Label(frame_option, text="Ticker", width=8)
+lbl_ticker.pack(side="left", padx=5, pady=5)
+# Ticker Combobox
+opt_ticker = ["BTC", "ETH", "DOT"]
+cmb_ticker = ttk.Combobox(frame_option, state="readonly", values=opt_ticker, width=10)
+cmb_ticker.current(0)
+cmb_ticker.pack(side="left", padx=5, pady=5)
 
-# TimIntv Option
+# 2. TimIntv Option
+# TimIntv Label
+lbl_timIntv = Label(frame_option, text="TimIntv", width=8)
+lbl_timIntv.pack(side="left", padx=5, pady=5)
+# TimIntv Combobox
+opt_timIntv = ["3", "7", "15", "30"]
+cmb_timIntv = ttk.Combobox(frame_option, state="readonly", values=opt_timIntv, width=10)
+cmb_timIntv.current(0)
+cmb_timIntv.pack(side="left", padx=5, pady=5)
 
-# MvAvg Option
+# 3. MvAvg Option
+# MvAvg Label
+lbl_mvAvg = Label(frame_option, text="MvAvg", width=8)
+lbl_mvAvg.pack(side="left", padx=5, pady=5)
+# MvAvg Combobox
+opt_mvAvg = ["3", "7", "20"]
+cmb_mvAvg = ttk.Combobox(frame_option, state="readonly", values=opt_mvAvg, width=10)
+cmb_mvAvg.current(0)
+cmb_mvAvg.pack(side="left", padx=5, pady=5)
 
-# Amount Option & Save Button
+# 4. Amount Option & Save Button
+lbl_amount = Label(frame_option, text="Amount", width=8)
+lbl_amount.pack(side="left", padx=5, pady=5)
+
+btn_save = Button(frame_option, padx=5, pady=5, width=12, text="Save")
+btn_save.pack(side="right")
 
 # Log Frame
 frame_log = Frame(root)
