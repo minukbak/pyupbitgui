@@ -61,7 +61,6 @@ frame_option.pack(padx=5, pady=5, ipady=5)
 # Log Frame
 frame_log = Frame(root)
 frame_log.pack(fill="both", padx=5, pady=5)
-
 # 스크롤 바
 scrollbar = Scrollbar(frame_log)
 scrollbar.pack(side="right", fill="y")
@@ -74,6 +73,13 @@ scrollbar.config(command=log_file.yview)
 # Result Frame
 result_frame = Frame(root)
 result_frame.pack(fill="both", padx=5, pady=5)
+
+scrollbar = Scrollbar(result_frame)
+scrollbar.pack(side="right", fill="y")
+
+result_file = Text(result_frame, height=10, yscrollcommand=scrollbar.set)
+result_file.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=result_file.yview)
 
 # Execute Frame
 frame_execute = Frame(root)
