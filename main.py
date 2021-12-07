@@ -16,18 +16,34 @@ root = Tk()
 root.title("UpbitAuto")
 root.geometry("640x500+100+100") # 가로 * 세로 + x좌표 + y좌표
 
-# 로그 기록 파일
-filename = "log.txt"
+# 직전 로그 기록 파일
+fileLog = "log.txt"
+# 직전 결과 기록 파일
+fileResult = "result.txt"
 
 def open_file():
-  if os.path.isfile(filename): # 파일 있으면 True, 없으면 False
-    with open(filename, "r", encoding="utf8") as file:
-      log_file.delete("1.0", END) # 텍스트 위젯 본문 삭제
-      log_file.insert(END, file.read()) # 파일 내용을 본문에 입력
+  if os.path.isfile(fileLog): # 파일 있으면 True, 없으면 False
+    with open(fileLog, "r", encoding="utf8") as file:
+      realTimeLog.delete("1.0", END) # 텍스트 위젯 본문 삭제
+      realTimeLog.insert(END, file.read()) # 파일 내용을 본문에 입력
 
 def save_file():
-  with open(filename, "w", encoding="utf8") as file:
-    file.write(log_file.get("1.0", END)) # 모든 내용을 가져와서 저장
+  with open(fileLog, "w", encoding="utf8") as file:
+    file.write(realTimeLog.get("1.0", END)) # 모든 내용을 저장
+
+# 시작
+def start():
+    realTimeLog.insert(END, "Hello World!\n")
+    realTimeLog.update()
+    realTimeLog.see(END)
+
+# 시작
+def end():
+  # loop 종료
+  # result에 결과 출력
+  print("end")
+  # 만약 프로그램이 실행하고 있지 않다면
+  # root.quit()
 
 menu = Menu(root)
 
@@ -99,9 +115,9 @@ scrollbar = Scrollbar(frame_log)
 scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
-log_file = Text(frame_log, height=20, yscrollcommand=scrollbar.set)
-log_file.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=log_file.yview)
+realTimeLog = Text(frame_log, height=20, yscrollcommand=scrollbar.set)
+realTimeLog.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=realTimeLog.yview)
 
 # Result Frame
 result_frame = LabelFrame(root, text=" Result ")
@@ -119,11 +135,11 @@ frame_execute = Frame(root)
 frame_execute.pack(fill="x", padx=5, pady=5)
 
 # End Button
-btn_end = Button(frame_execute, padx=5, pady=5, width=12, text="End")
+btn_end = Button(frame_execute, padx=5, pady=5, width=12, text="End", command=end)
 btn_end.pack(side="right", padx=5)
 
 # Start Button
-btn_start = Button(frame_execute, padx=5, pady=5, width=12, text="Start")
+btn_start = Button(frame_execute, padx=5, pady=5, width=12, text="Start", command=start)
 btn_start.pack(side="right", padx=5)
 
 root.config(menu=menu)
