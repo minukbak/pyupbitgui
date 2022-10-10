@@ -66,6 +66,7 @@ menu.add_cascade(label="Help", menu=menu_help)
 # Option Frame
 frame_option = LabelFrame(root, text=" Options ")
 frame_option.pack(fill="x", padx=5, pady=5)
+frame_option.option_add('*TCombobox*Listbox.Justify', 'center') 
 
 # 1. Ticker Option
 # Ticker Label
@@ -73,7 +74,7 @@ lbl_ticker = Label(frame_option, text="Ticker", width=6)
 lbl_ticker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
 opt_ticker = ["BTC", "ETH", "DOT"]
-cmb_ticker = ttk.Combobox(frame_option, state="readonly", values=opt_ticker, width=8)
+cmb_ticker = ttk.Combobox(frame_option, state="readonly", justify="center", values=opt_ticker, width=8)
 cmb_ticker.current(0)
 cmb_ticker.pack(side="left", padx=5, pady=5)
 
@@ -83,7 +84,7 @@ lbl_timIntv = Label(frame_option, text="TimIntv", width=6)
 lbl_timIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
 opt_timIntv = ["3", "7", "15", "30"]
-cmb_timIntv = ttk.Combobox(frame_option, state="readonly", values=opt_timIntv, width=8)
+cmb_timIntv = ttk.Combobox(frame_option, state="readonly", justify="center", values=opt_timIntv, width=8)
 cmb_timIntv.current(0)
 cmb_timIntv.pack(side="left", padx=5, pady=5)
 
@@ -93,7 +94,7 @@ lbl_mvAvg = Label(frame_option, text="MvAvg", width=6)
 lbl_mvAvg.pack(side="left", padx=5, pady=5)
 # MvAvg Combobox
 opt_mvAvg = ["3", "7", "20"]
-cmb_mvAvg = ttk.Combobox(frame_option, state="readonly", values=opt_mvAvg, width=8)
+cmb_mvAvg = ttk.Combobox(frame_option, state="readonly", justify="center", values=opt_mvAvg, width=8)
 cmb_mvAvg.current(0)
 cmb_mvAvg.pack(side="left", padx=5, pady=5)
 
@@ -104,7 +105,7 @@ lbl_amount.pack(side="left", padx=5, pady=5)
 
 # Amount TextBox
 str = StringVar()
-tBox_Amt = ttk.Entry(frame_option, width=20, textvariable=str)
+tBox_Amt = ttk.Entry(frame_option, textvariable=str, justify='right', width=14)
 tBox_Amt.pack(side="left", padx=5, pady=5)
 
 # Log Frame
