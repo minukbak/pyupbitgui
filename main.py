@@ -21,142 +21,142 @@ fileLog = "log.txt"
 # 직전 결과 기록 파일
 fileResult = "result.txt"
 
-def open_file():
+def openFile():
   # log.txt 열기
   if os.path.isfile(fileLog): # 파일 있으면 True, 없으면 False
     with open(fileLog, "r", encoding="utf8") as file:
-      txt_log.delete("1.0", END) # 텍스트 위젯 본문 삭제
-      txt_log.insert(END, file.read()) # 파일 내용을 본문에 입력
+      txtLog.delete("1.0", END) # 텍스트 위젯 본문 삭제
+      txtLog.insert(END, file.read()) # 파일 내용을 본문에 입력
   # result.txt 열기
   if os.path.isfile(fileResult):
     with open(fileResult, "r", encoding="utf8") as file:
-      txt_result.delete("1.0", END)
-      txt_result.insert(END, file.read())
+      txtResult.delete("1.0", END)
+      txtResult.insert(END, file.read())
 
-def save_file():
+def saveFile():
   # log.txt 저장
   with open(fileLog, "w", encoding="utf8") as file:
-    file.write(txt_log.get("1.0", END)) # 모든 내용을 저장
+    file.write(txtLog.get("1.0", END)) # 모든 내용을 저장
   # result.txt 저장
   with open(fileResult, "w", encoding="utf8") as file:
-    file.write(txt_result.get("1.0", END))
+    file.write(txtResult.get("1.0", END))
 
 # 시작
-def start():
-  txt_log.insert(END, "\nStart!")
-  txt_log.update()
-  txt_log.see(END)
+def startTrade():
+  txtLog.insert(END, "\nTrade Start!")
+  txtLog.update()
+  txtLog.see(END)
 
-# 시작
-def end():
+# 종료
+def endTrade():
   # loop 종료
   # result에 결과 출력
-  txt_result.insert(END, "\nEnd!")
-  txt_result.update()
-  txt_result.see(END)
+  txtResult.insert(END, "\nTrade End!")
+  txtResult.update()
+  txtResult.see(END)
 
   # 결과 저장
-  save_file()
+  saveFile()
   # 만약 프로그램이 실행하고 있지 않다면
   # root.quit()
 
 menu = Menu(root)
 
 # 파일
-menu_file = Menu(menu, tearoff=0)
-menu_file.add_command(label="Open File...", command=open_file)
-menu_file.add_separator()
-# menu_file.add_command(label="Save", command=save_file)
-# menu_file.add_separator()
-menu_file.add_command(label="Exit", command=root.quit)
-menu.add_cascade(label="File", menu=menu_file)
+menuFile = Menu(menu, tearoff=0)
+menuFile.add_command(label="Open File...", command=openFile)
+menuFile.add_separator()
+# menuFile.add_command(label="Save", command=saveFile)
+# menuFile.add_separator()
+menuFile.add_command(label="Exit", command=root.quit)
+menu.add_cascade(label="File", menu=menuFile)
 
 # 도움말
-menu_help = Menu(menu, tearoff=0)
-menu_help.add_command(label="Welcome")
-menu_help.add_separator()
-menu_help.add_command(label="About")
-menu.add_cascade(label="Help", menu=menu_help)
+menuHelp = Menu(menu, tearoff=0)
+menuHelp.add_command(label="Welcome")
+menuHelp.add_separator()
+menuHelp.add_command(label="About")
+menu.add_cascade(label="Help", menu=menuHelp)
 
 # Option Frame
-frame_option = LabelFrame(root, text=" Options ")
-frame_option.pack(fill="x", padx=5, pady=5)
-frame_option.option_add('*TCombobox*Listbox.Justify', 'center') 
+frameOption = LabelFrame(root, text=" Options ")
+frameOption.pack(fill="x", padx=5, pady=5)
+frameOption.option_add('*TCombobox*Listbox.Justify', 'center') 
 
 # 1. Ticker Option
 # Ticker Label
-lbl_ticker = Label(frame_option, text="Ticker", width=6)
-lbl_ticker.pack(side="left", padx=5, pady=5)
+lblTicker = Label(frameOption, text="Ticker", width=6)
+lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
-opt_ticker = ["BTC", "ETH", "DOT"]
-cmb_ticker = ttk.Combobox(frame_option, state="readonly", justify="center", values=opt_ticker, width=8)
-cmb_ticker.current(0)
-cmb_ticker.pack(side="left", padx=5, pady=5)
+optTicker = ["BTC", "ETH", "DOT"]
+cmbTicker = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTicker, width=8)
+cmbTicker.current(0)
+cmbTicker.pack(side="left", padx=5, pady=5)
 
 # 2. TimIntv Option
 # TimIntv Label
-lbl_timIntv = Label(frame_option, text="TimIntv", width=6)
-lbl_timIntv.pack(side="left", padx=5, pady=5)
+lblTimIntv = Label(frameOption, text="TimIntv", width=6)
+lblTimIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
-opt_timIntv = ["3", "7", "15", "30"]
-cmb_timIntv = ttk.Combobox(frame_option, state="readonly", justify="center", values=opt_timIntv, width=8)
-cmb_timIntv.current(0)
-cmb_timIntv.pack(side="left", padx=5, pady=5)
+optTimIntv = ["3", "7", "15", "30"]
+cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=8)
+cmbTimIntv.current(0)
+cmbTimIntv.pack(side="left", padx=5, pady=5)
 
 # 3. MvAvg Option
 # MvAvg Label
-lbl_mvAvg = Label(frame_option, text="MvAvg", width=6)
-lbl_mvAvg.pack(side="left", padx=5, pady=5)
+lblMvAvg = Label(frameOption, text="MvAvg", width=6)
+lblMvAvg.pack(side="left", padx=5, pady=5)
 # MvAvg Combobox
-opt_mvAvg = ["3", "7", "20"]
-cmb_mvAvg = ttk.Combobox(frame_option, state="readonly", justify="center", values=opt_mvAvg, width=8)
-cmb_mvAvg.current(0)
-cmb_mvAvg.pack(side="left", padx=5, pady=5)
+optMvAvg = ["3", "7", "20"]
+cmbMvAvg = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg, width=8)
+cmbMvAvg.current(0)
+cmbMvAvg.pack(side="left", padx=5, pady=5)
 
 # 4. Amount Option
 # Amount Label
-lbl_amount = Label(frame_option, text="Amount", width=6)
-lbl_amount.pack(side="left", padx=5, pady=5)
+lblAmount = Label(frameOption, text="Amount", width=6)
+lblAmount.pack(side="left", padx=5, pady=5)
 
 # Amount TextBox
 str = StringVar()
-tBox_Amt = ttk.Entry(frame_option, textvariable=str, justify='right', width=14)
-tBox_Amt.pack(side="left", padx=5, pady=5)
+tBoxAmt = ttk.Entry(frameOption, textvariable=str, justify='right', width=14)
+tBoxAmt.pack(side="left", padx=5, pady=5)
 
 # Log Frame
-frame_log = LabelFrame(root, text=" Log ")
-frame_log.pack(fill="both", padx=5, pady=5)
+frameLog = LabelFrame(root, text=" Log ")
+frameLog.pack(fill="both", padx=5, pady=5)
 # 스크롤 바
-scrollbar = Scrollbar(frame_log)
+scrollbar = Scrollbar(frameLog)
 scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
-txt_log = Text(frame_log, height=20, yscrollcommand=scrollbar.set)
-txt_log.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=txt_log.yview)
+txtLog = Text(frameLog, height=20, yscrollcommand=scrollbar.set)
+txtLog.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txtLog.yview)
 
 # Result Frame
-result_frame = LabelFrame(root, text=" Result ")
-result_frame.pack(fill="both", padx=5, pady=5)
+resultFrame = LabelFrame(root, text=" Result ")
+resultFrame.pack(fill="both", padx=5, pady=5)
 
-scrollbar = Scrollbar(result_frame)
+scrollbar = Scrollbar(resultFrame)
 scrollbar.pack(side="right", fill="y")
 
-txt_result = Text(result_frame, height=5, yscrollcommand=scrollbar.set)
-txt_result.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=txt_result.yview)
+txtResult = Text(resultFrame, height=5, yscrollcommand=scrollbar.set)
+txtResult.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txtResult.yview)
 
 # Execute Frame
-frame_execute = Frame(root)
-frame_execute.pack(fill="x", padx=5, pady=5)
+frameExecute = Frame(root)
+frameExecute.pack(fill="x", padx=5, pady=5)
 
 # End Button
-btn_end = Button(frame_execute, padx=5, pady=5, width=12, text="End", command=end)
-btn_end.pack(side="right", padx=5)
+btnEnd = Button(frameExecute, padx=5, pady=5, width=12, text="End", command=endTrade)
+btnEnd.pack(side="right", padx=5)
 
 # Start Button
-btn_start = Button(frame_execute, padx=5, pady=5, width=12, text="Start", command=start)
-btn_start.pack(side="right", padx=5)
+btnStart = Button(frameExecute, padx=5, pady=5, width=12, text="Start", command=startTrade)
+btnStart.pack(side="right", padx=5)
 
 root.config(menu=menu)
 
