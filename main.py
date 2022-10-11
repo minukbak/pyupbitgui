@@ -22,26 +22,41 @@ fileLog = "log.txt"
 fileResult = "result.txt"
 
 def open_file():
+  # log.txt 열기
   if os.path.isfile(fileLog): # 파일 있으면 True, 없으면 False
     with open(fileLog, "r", encoding="utf8") as file:
-      realTimeLog.delete("1.0", END) # 텍스트 위젯 본문 삭제
-      realTimeLog.insert(END, file.read()) # 파일 내용을 본문에 입력
+      txt_log.delete("1.0", END) # 텍스트 위젯 본문 삭제
+      txt_log.insert(END, file.read()) # 파일 내용을 본문에 입력
+  # result.txt 열기
+  if os.path.isfile(fileResult):
+    with open(fileResult, "r", encoding="utf8") as file:
+      txt_result.delete("1.0", END)
+      txt_result.insert(END, file.read())
 
 def save_file():
+  # log.txt 저장
   with open(fileLog, "w", encoding="utf8") as file:
-    file.write(realTimeLog.get("1.0", END)) # 모든 내용을 저장
+    file.write(txt_log.get("1.0", END)) # 모든 내용을 저장
+  # result.txt 저장
+  with open(fileResult, "w", encoding="utf8") as file:
+    file.write(txt_result.get("1.0", END))
 
 # 시작
 def start():
-    realTimeLog.insert(END, "Hello World!\n")
-    realTimeLog.update()
-    realTimeLog.see(END)
+  txt_log.insert(END, "\nStart!")
+  txt_log.update()
+  txt_log.see(END)
 
 # 시작
 def end():
   # loop 종료
   # result에 결과 출력
-  print("end")
+  txt_result.insert(END, "\nEnd!")
+  txt_result.update()
+  txt_result.see(END)
+
+  # 결과 저장
+  save_file()
   # 만약 프로그램이 실행하고 있지 않다면
   # root.quit()
 
@@ -51,8 +66,8 @@ menu = Menu(root)
 menu_file = Menu(menu, tearoff=0)
 menu_file.add_command(label="Open File...", command=open_file)
 menu_file.add_separator()
-menu_file.add_command(label="Save", command=save_file)
-menu_file.add_separator()
+# menu_file.add_command(label="Save", command=save_file)
+# menu_file.add_separator()
 menu_file.add_command(label="Exit", command=root.quit)
 menu.add_cascade(label="File", menu=menu_file)
 
@@ -116,9 +131,9 @@ scrollbar = Scrollbar(frame_log)
 scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
-realTimeLog = Text(frame_log, height=20, yscrollcommand=scrollbar.set)
-realTimeLog.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=realTimeLog.yview)
+txt_log = Text(frame_log, height=20, yscrollcommand=scrollbar.set)
+txt_log.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txt_log.yview)
 
 # Result Frame
 result_frame = LabelFrame(root, text=" Result ")
@@ -127,9 +142,9 @@ result_frame.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(result_frame)
 scrollbar.pack(side="right", fill="y")
 
-result_file = Text(result_frame, height=5, yscrollcommand=scrollbar.set)
-result_file.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=result_file.yview)
+txt_result = Text(result_frame, height=5, yscrollcommand=scrollbar.set)
+txt_result.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txt_result.yview)
 
 # Execute Frame
 frame_execute = Frame(root)
