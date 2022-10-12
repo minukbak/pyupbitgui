@@ -10,7 +10,7 @@ mvAvg1 = 7 # 첫 번째 이동평균선 적용 값
 mvAvg2 = 30 # 두 번째 이동평균선 적용 값
 amount = 10000 # 프로그램 시작 금액
 
-# tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)
+tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)
 
 root = Tk()
 root.title("UpbitAuto")
@@ -60,23 +60,23 @@ def endTrade():
   # 만약 프로그램이 실행하고 있지 않다면
   # root.quit()
 
-menu = Menu(root)
-
+# Menu Bar
+menuBar = Menu(root)
 # 파일
-menuFile = Menu(menu, tearoff=0)
+menuFile = Menu(menuBar, tearoff=0)
 menuFile.add_command(label="Open File...", command=openFile)
 menuFile.add_separator()
 # menuFile.add_command(label="Save", command=saveFile)
 # menuFile.add_separator()
 menuFile.add_command(label="Exit", command=root.quit)
-menu.add_cascade(label="File", menu=menuFile)
+menuBar.add_cascade(label="File", menu=menuFile)
 
 # 도움말
-menuHelp = Menu(menu, tearoff=0)
+menuHelp = Menu(menuBar, tearoff=0)
 menuHelp.add_command(label="Welcome")
 menuHelp.add_separator()
 menuHelp.add_command(label="About")
-menu.add_cascade(label="Help", menu=menuHelp)
+menuBar.add_cascade(label="Help", menu=menuHelp)
 
 # Option Frame
 frameOption = LabelFrame(root, text=" Options ")
@@ -119,8 +119,8 @@ lblAmount = Label(frameOption, text="Amount", width=6)
 lblAmount.pack(side="left", padx=5, pady=5)
 
 # Amount TextBox
-str = StringVar()
-tBoxAmt = ttk.Entry(frameOption, textvariable=str, justify='right', width=14)
+amount = StringVar()
+tBoxAmt = ttk.Entry(frameOption, textvariable=amount, justify='right', width=14)
 tBoxAmt.pack(side="left", padx=5, pady=5)
 
 # Log Frame
@@ -158,7 +158,6 @@ btnEnd.pack(side="right", padx=5)
 btnStart = Button(frameExecute, padx=5, pady=5, width=12, text="Start", command=startTrade)
 btnStart.pack(side="right", padx=5)
 
-root.config(menu=menu)
-
+root.config(menu=menuBar)
 root.resizable(False, False)
 root.mainloop()
