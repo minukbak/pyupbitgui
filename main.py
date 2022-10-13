@@ -55,6 +55,14 @@ def startTrade():
   txtLog.update()
   txtLog.see(END)
 
+
+
+
+
+
+
+  
+
 # 종료
 def endTrade():
   # loop 종료
@@ -118,16 +126,15 @@ cmbTimIntv.pack(side="left", padx=5, pady=5)
 lblMvAvg1 = Label(frameOption, text="MvAvg1", width=6)
 lblMvAvg1.pack(side="left", padx=5, pady=5)
 
-# MvAvg2 Label
-lblMvAvg2 = Label(frameOption, text="MvAvg2", width=6)
-lblMvAvg2.pack(side="left", padx=5, pady=5)
-
 # MvAvg Combobox
 optMvAvg1 = ["3", "7", "20"]
-
 cmbMvAvg1 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg1, width=4)
 cmbMvAvg1.current(0)
 cmbMvAvg1.pack(side="left", padx=5, pady=5)
+
+# MvAvg2 Label
+lblMvAvg2 = Label(frameOption, text="MvAvg2", width=6)
+lblMvAvg2.pack(side="left", padx=5, pady=5)
 
 # MvAvg2 Combobox
 optMvAvg2 = ["3", "7", "20"]
