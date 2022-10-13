@@ -1,8 +1,16 @@
 import os
+import pyupbit
+import json
 import tkinter.ttk as ttk
 from tkinter import *
 
 from strategies import tts3ma
+
+with open('config.json', 'r') as conf:
+  config = json.load(conf)
+access = config['DEFAULT']['ACCESS_KEY'] 
+secret = config['DEFAULT']['SECRET_KEY']
+upbit = pyupbit.Upbit(access, secret)
 
 ticker = "KRW-STPT" # 프로그램 적용 코인
 timIntv = "minute1" # 봉 단위, minute1 = 1분봉
@@ -10,7 +18,7 @@ mvAvg1 = 7 # 첫 번째 이동평균선 적용 값
 mvAvg2 = 30 # 두 번째 이동평균선 적용 값
 amount = 10000 # 프로그램 시작 금액
 
-tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)
+# tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)
 
 root = Tk()
 root.title("UpbitAuto")
