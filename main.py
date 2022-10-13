@@ -1,16 +1,9 @@
 import os
-import pyupbit
-import json
 import tkinter.ttk as ttk
 from tkinter import *
 
+from component import asistUpbit
 from strategies import tts3ma
-
-with open('config.json', 'r') as conf:
-  config = json.load(conf)
-access = config['DEFAULT']['ACCESS_KEY'] 
-secret = config['DEFAULT']['SECRET_KEY']
-upbit = pyupbit.Upbit(access, secret)
 
 ticker = "KRW-STPT" # 프로그램 적용 코인
 timIntv = "minute1" # 봉 단위, minute1 = 1분봉
@@ -55,14 +48,6 @@ def startTrade():
   txtLog.update()
   txtLog.see(END)
 
-
-
-
-
-
-
-  
-
 # 종료
 def endTrade():
   # loop 종료
@@ -106,7 +91,7 @@ frameOption.pack(fill="x", padx=5, pady=5)
 lblTicker = Label(frameOption, text="Ticker", width=5)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
-optTickers = pyupbit.get_tickers(fiat="KRW")
+optTickers = asistUpbit.getTickers()
 cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5, pady=5)
