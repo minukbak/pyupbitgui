@@ -3,19 +3,7 @@ import tkinter.ttk as ttk
 from tkinter import *
 
 from component import asistUpbit
-from strategies import tts3ma
-
-ticker = "KRW-STPT" # 프로그램 적용 코인
-timIntv = "minute1" # 봉 단위, minute1 = 1분봉
-mvAvg1 = 7 # 첫 번째 이동평균선 적용 값
-mvAvg2 = 30 # 두 번째 이동평균선 적용 값
-amount = 10000 # 프로그램 시작 금액
-
-# tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)
-
-root = Tk()
-root.title("UpbitAuto")
-root.geometry("700x580+100+100") # 가로 * 세로 + x좌표 + y좌표
+# from strategies import tts3ma
 
 # 직전 로그 기록 파일
 fileLog = "log.txt"
@@ -42,13 +30,13 @@ def saveFile():
   with open(fileResult, "w", encoding="utf8") as file:
     file.write(txtResult.get("1.0", END))
 
-# 시작
+# 거래 시작(버튼)
 def startTrade():
   txtLog.insert(END, "\nTrade Start!")
   txtLog.update()
   txtLog.see(END)
 
-# 종료
+# 거래 종료(버튼)
 def endTrade():
   # loop 종료
   # result에 결과 출력
@@ -60,6 +48,13 @@ def endTrade():
   saveFile()
   # 만약 프로그램이 실행하고 있지 않다면
   # root.quit()
+
+######################################
+
+### Trade GUI 생성 ###
+root = Tk()
+root.title("UpbitAuto")
+root.geometry("700x580+100+100") # 가로 * 세로 + x좌표 + y좌표
 
 # Menu Bar
 menuBar = Menu(root)
@@ -174,4 +169,12 @@ btnStart.pack(side="right", padx=5)
 
 root.config(menu=menuBar)
 root.resizable(False, False)
+
 root.mainloop()
+
+# ticker = "KRW-STPT" # 프로그램 적용 코인
+# timIntv = "minute1" # 봉 단위, minute1 = 1분봉
+# mvAvg1 = 7 # 첫 번째 이동평균선 적용 값
+# mvAvg2 = 30 # 두 번째 이동평균선 적용 값
+# amount = 10000 # 프로그램 시작 금액
+# tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)
