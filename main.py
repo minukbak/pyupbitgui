@@ -22,7 +22,7 @@ amount = 10000 # 프로그램 시작 금액
 
 root = Tk()
 root.title("UpbitAuto")
-root.geometry("640x500+100+100") # 가로 * 세로 + x좌표 + y좌표
+root.geometry("700x580+100+100") # 가로 * 세로 + x좌표 + y좌표
 
 # 직전 로그 기록 파일
 fileLog = "log.txt"
@@ -89,37 +89,51 @@ menuBar.add_cascade(label="Help", menu=menuHelp)
 # Option Frame
 frameOption = LabelFrame(root, text=" Options ")
 frameOption.pack(fill="x", padx=5, pady=5)
-frameOption.option_add('*TCombobox*Listbox.Justify', 'center') 
+
+# 콤보리스트 가운데 정렬
+# frameOption.option_add('*TCombobox*Listbox.Justify', 'center')
 
 # 1. Ticker Option (거래할 코인 설정)
 # Ticker Label
-lblTicker = Label(frameOption, text="Ticker", width=6)
+lblTicker = Label(frameOption, text="Ticker", width=5)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
 optTickers = pyupbit.get_tickers(fiat="KRW")
-cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=8)
+cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5, pady=5)
 
-# 2. TimIntv Option
+# 2. TimIntv Option (시간 간격, minute1 = 1분봉)
 # TimIntv Label
 lblTimIntv = Label(frameOption, text="TimIntv", width=6)
 lblTimIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
 optTimIntv = ["3", "7", "15", "30"]
-cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=8)
+cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=4)
 cmbTimIntv.current(0)
 cmbTimIntv.pack(side="left", padx=5, pady=5)
 
-# 3. MvAvg Option
-# MvAvg Label
-lblMvAvg = Label(frameOption, text="MvAvg", width=6)
-lblMvAvg.pack(side="left", padx=5, pady=5)
+# 3. MvAvg Option (기준 이동평균선)
+# MvAvg1 Label
+lblMvAvg1 = Label(frameOption, text="MvAvg1", width=6)
+lblMvAvg1.pack(side="left", padx=5, pady=5)
+
+# MvAvg2 Label
+lblMvAvg2 = Label(frameOption, text="MvAvg2", width=6)
+lblMvAvg2.pack(side="left", padx=5, pady=5)
+
 # MvAvg Combobox
-optMvAvg = ["3", "7", "20"]
-cmbMvAvg = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg, width=8)
-cmbMvAvg.current(0)
-cmbMvAvg.pack(side="left", padx=5, pady=5)
+optMvAvg1 = ["3", "7", "20"]
+
+cmbMvAvg1 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg1, width=4)
+cmbMvAvg1.current(0)
+cmbMvAvg1.pack(side="left", padx=5, pady=5)
+
+# MvAvg2 Combobox
+optMvAvg2 = ["3", "7", "20"]
+cmbMvAvg2 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg2, width=4)
+cmbMvAvg2.current(0)
+cmbMvAvg2.pack(side="left", padx=5, pady=5)
 
 # 4. Amount Option
 # Amount Label
@@ -128,7 +142,7 @@ lblAmount.pack(side="left", padx=5, pady=5)
 
 # Amount TextBox
 amount = StringVar()
-tBoxAmt = ttk.Entry(frameOption, textvariable=amount, justify='right', width=14)
+tBoxAmt = ttk.Entry(frameOption, textvariable=amount, justify='right', width=12)
 tBoxAmt.pack(side="left", padx=5, pady=5)
 
 # Log Frame
@@ -139,7 +153,7 @@ scrollbar = Scrollbar(frameLog)
 scrollbar.pack(side="right", fill="y")
 
 # 로그 영역
-txtLog = Text(frameLog, height=20, yscrollcommand=scrollbar.set)
+txtLog = Text(frameLog, height=24, yscrollcommand=scrollbar.set)
 txtLog.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtLog.yview)
 
@@ -150,7 +164,7 @@ resultFrame.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(resultFrame)
 scrollbar.pack(side="right", fill="y")
 
-txtResult = Text(resultFrame, height=5, yscrollcommand=scrollbar.set)
+txtResult = Text(resultFrame, height=7, yscrollcommand=scrollbar.set)
 txtResult.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtResult.yview)
 
