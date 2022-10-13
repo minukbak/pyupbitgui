@@ -91,15 +91,15 @@ frameOption = LabelFrame(root, text=" Options ")
 frameOption.pack(fill="x", padx=5, pady=5)
 frameOption.option_add('*TCombobox*Listbox.Justify', 'center') 
 
-# 1. Ticker Option
+# 1. Ticker Option (거래할 코인 설정)
 # Ticker Label
 lblTicker = Label(frameOption, text="Ticker", width=6)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
-optTicker = ["BTC", "ETH", "DOT"]
-cmbTicker = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTicker, width=8)
-cmbTicker.current(0)
-cmbTicker.pack(side="left", padx=5, pady=5)
+optTickers = pyupbit.get_tickers(fiat="KRW")
+cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=8)
+cmbTickers.current(0)
+cmbTickers.pack(side="left", padx=5, pady=5)
 
 # 2. TimIntv Option
 # TimIntv Label
