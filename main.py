@@ -2,8 +2,8 @@ import os
 import tkinter.ttk as ttk
 from tkinter import *
 
-from component import asistUpbit
-# from strategies import tts3ma
+from component import asist
+from strategies import ttsMa
 
 # 직전 로그 기록 파일
 fileLog = "log.txt"
@@ -30,8 +30,23 @@ def saveFile():
   with open(fileResult, "w", encoding="utf8") as file:
     file.write(txtResult.get("1.0", END))
 
+global ticker # 프로그램 적용 코인
+global timIntv # 봉 단위, minute1 = 1분봉
+global mvAvg1 # 첫 번째 이동평균선 적용 값
+global mvAvg2 # 두 번째 이동평균선 적용 값
+global amount # 프로그램 시작 금액  
+
 # 거래 시작(버튼)
 def startTrade():
+  ticker = cmbTickers.get()
+  timIntv = cmbTimIntv.get()
+  mvAvg1 = int(cmbMvAvg1.get())
+  mvAvg2 = int(cmbMvAvg2.get())
+  amount = float(tBoxAmt.get())
+  
+  print(ticker, timIntv, mvAvg1, mvAvg2, amount)
+  # ttsMa.main(ticker, timIntv, mvAvg1, mvAvg2, amount) 
+
   txtLog.insert(END, "\nTrade Start!")
   txtLog.update()
   txtLog.see(END)
@@ -86,7 +101,7 @@ frameOption.pack(fill="x", padx=5, pady=5)
 lblTicker = Label(frameOption, text="Ticker", width=5)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
-optTickers = asistUpbit.getTickers()
+optTickers = asist.getTickers()
 cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5, pady=5)
@@ -96,7 +111,7 @@ cmbTickers.pack(side="left", padx=5, pady=5)
 lblTimIntv = Label(frameOption, text="TimIntv", width=6)
 lblTimIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
-optTimIntv = ["3", "7", "15", "30"]
+optTimIntv = ["minute1"]
 cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=4)
 cmbTimIntv.current(0)
 cmbTimIntv.pack(side="left", padx=5, pady=5)
@@ -107,7 +122,7 @@ lblMvAvg1 = Label(frameOption, text="MvAvg1", width=6)
 lblMvAvg1.pack(side="left", padx=5, pady=5)
 
 # MvAvg Combobox
-optMvAvg1 = ["3", "7", "20"]
+optMvAvg1 = ["7"]
 cmbMvAvg1 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg1, width=4)
 cmbMvAvg1.current(0)
 cmbMvAvg1.pack(side="left", padx=5, pady=5)
@@ -117,7 +132,7 @@ lblMvAvg2 = Label(frameOption, text="MvAvg2", width=6)
 lblMvAvg2.pack(side="left", padx=5, pady=5)
 
 # MvAvg2 Combobox
-optMvAvg2 = ["3", "7", "20"]
+optMvAvg2 = ["30"]
 cmbMvAvg2 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg2, width=4)
 cmbMvAvg2.current(0)
 cmbMvAvg2.pack(side="left", padx=5, pady=5)
@@ -130,6 +145,7 @@ lblAmount.pack(side="left", padx=5, pady=5)
 # Amount TextBox
 amount = StringVar()
 tBoxAmt = ttk.Entry(frameOption, textvariable=amount, justify='right', width=12)
+tBoxAmt.insert(0, "10000")
 tBoxAmt.pack(side="left", padx=5, pady=5)
 
 # Log Frame
@@ -172,9 +188,3 @@ root.resizable(False, False)
 
 root.mainloop()
 
-# ticker = "KRW-STPT" # 프로그램 적용 코인
-# timIntv = "minute1" # 봉 단위, minute1 = 1분봉
-# mvAvg1 = 7 # 첫 번째 이동평균선 적용 값
-# mvAvg2 = 30 # 두 번째 이동평균선 적용 값
-# amount = 10000 # 프로그램 시작 금액
-# tts3ma.main(ticker, timIntv, mvAvg1, mvAvg2, amount)

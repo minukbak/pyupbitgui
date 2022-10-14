@@ -1,4 +1,4 @@
-# Trend trading strategy using three moving averages
+# Trend trading strategy using moving averages
 import pyupbit
 import datetime
 import time
@@ -30,16 +30,16 @@ def condxSell(ticker, timIntv, mvAvg1, mvAvg2):
 # First ask quote (시장가 매수 시 체결 위치 / 매도 1 호가)
 def getMarketBuyPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["ask_price"]
+
 # First bid quote (시장가 매도 시 체결 위치 / 매수 1 호가)
 def getMarketSellPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
+# Config.json 파일을 통해 관리 중인 Upbit Key 불러오기 
 with open('config.json', 'r') as conf:
   config = json.load(conf)
-
 access = config['DEFAULT']['ACCESS_KEY'] 
 secret = config['DEFAULT']['SECRET_KEY']
-
 upbit = pyupbit.Upbit(access, secret)
 
 def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
