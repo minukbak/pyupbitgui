@@ -5,6 +5,9 @@ import time
 import json
 import pprint
 
+from . import util
+upbit = util.accessUpbit()
+
 # Calculate The Moving Average (이동 평균선 계산)
 def calMvAvg(ticker, timIntv, cnt):
   df = pyupbit.get_ohlcv(ticker, timIntv, cnt+1)
@@ -35,12 +38,6 @@ def getMarketBuyPrice(ticker):
 def getMarketSellPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
-# Config.json 파일을 통해 관리 중인 Upbit Key 불러오기 
-with open('config.json', 'r') as conf:
-  config = json.load(conf)
-access = config['DEFAULT']['ACCESS_KEY'] 
-secret = config['DEFAULT']['SECRET_KEY']
-upbit = pyupbit.Upbit(access, secret)
 
 def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   
@@ -53,12 +50,6 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   sellPrice = 0.0 # 매도가
   curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
-
-  # 프로그램 적용 코인 설정 오류 시 종료
-  tickers = pyupbit.get_tickers(fiat="KRW")
-  if ticker not in tickers:
-    print("존재하지 않는 ticker입니다. (ex 비트코인 ticker: KRW-BTC)")
-    exit()
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   balance = upbit.get_balance("KRW")

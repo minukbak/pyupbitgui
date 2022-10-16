@@ -2,8 +2,7 @@ import os
 import tkinter.ttk as ttk
 from tkinter import *
 
-from component import asist
-from strategies import ttsMa
+import strategies
 
 # 직전 로그 기록 파일
 fileLog = "log.txt"
@@ -44,8 +43,8 @@ def startTrade():
   mvAvg2 = int(cmbMvAvg2.get())
   amount = float(tBoxAmt.get())
   
-  print(ticker, timIntv, mvAvg1, mvAvg2, amount)
-  # ttsMa.main(ticker, timIntv, mvAvg1, mvAvg2, amount) 
+  # print(ticker, timIntv, mvAvg1, mvAvg2, amount)
+  strategies.ttsMa.main(ticker, timIntv, mvAvg1, mvAvg2, amount) 
 
   txtLog.insert(END, "\nTrade Start!")
   txtLog.update()
@@ -101,18 +100,18 @@ frameOption.pack(fill="x", padx=5, pady=5)
 lblTicker = Label(frameOption, text="Ticker", width=5)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
-optTickers = asist.getTickers()
-cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
+optTickers = strategies.util.getTickers()
+cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=11)
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5, pady=5)
 
 # 2. TimIntv Option (시간 간격, minute1 = 1분봉)
 # TimIntv Label
-lblTimIntv = Label(frameOption, text="TimIntv", width=6)
+lblTimIntv = Label(frameOption, text="TimIntv", width=5)
 lblTimIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
 optTimIntv = ["minute1"]
-cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=4)
+cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=8)
 cmbTimIntv.current(0)
 cmbTimIntv.pack(side="left", padx=5, pady=5)
 

@@ -1,5 +1,6 @@
 config.json
 __pycache__
+tempCodeRunnerFile.py
 
 # 로그 및 결과 파일 업로드 제외
 log.txt
