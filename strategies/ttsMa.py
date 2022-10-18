@@ -51,8 +51,8 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
   curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
   
-  mvAvg1 = mvAvg[0] # 기준 이동평균선
-  mvAvg2 = mvAvg[1]
+  mvAvg1 = int(mvAvg[0]) # 기준 이동평균선
+  mvAvg2 = int(mvAvg[1])
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   balance = upbit.get_balance("KRW")
