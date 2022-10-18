@@ -29,22 +29,14 @@ def saveFile():
   with open(fileResult, "w", encoding="utf8") as file:
     file.write(txtResult.get("1.0", END))
 
-global ticker # 프로그램 적용 코인
-global timIntv # 봉 단위, minute1 = 1분봉
-global mvAvg1 # 첫 번째 이동평균선 적용 값
-global mvAvg2 # 두 번째 이동평균선 적용 값
-global amount # 프로그램 시작 금액  
-
 # 거래 시작(버튼)
 def startTrade():
-  ticker = cmbTickers.get()
-  timIntv = cmbTimIntv.get()
-  mvAvg1 = int(cmbMvAvg1.get())
-  mvAvg2 = int(cmbMvAvg2.get())
-  amount = float(tBoxAmt.get())
+  ticker = cmbTickers.get() # 프로그램 적용 코인
+  timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
+  mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
+  amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
-  # print(ticker, timIntv, mvAvg1, mvAvg2, amount)
-  strategies.ttsMa.main(ticker, timIntv, mvAvg1, mvAvg2, amount) 
+  strategies.ttsMa.main(txtLog, ticker, timIntv, mvAvg, amount) 
 
   txtLog.insert(END, "\nTrade Start!")
   txtLog.update()
@@ -61,14 +53,14 @@ def endTrade():
   # 결과 저장
   saveFile()
   # 만약 프로그램이 실행하고 있지 않다면
-  root.quit()
+  # root.quit()
 
 ######################################
 
-### Trade GUI 생성 ###
+### Trade GUI 생성 ###g
 root = Tk()
 root.title("UpbitAuto")
-root.geometry("700x580+100+100") # 가로 * 세로 + x좌표 + y좌표
+root.geometry("660x580+100+100") # 가로 * 세로 + x좌표 + y좌표
 
 # Menu Bar
 menuBar = Menu(root)
@@ -97,17 +89,17 @@ frameOption.pack(fill="x", padx=5, pady=5)
 
 # 1. Ticker Option (거래할 코인 설정)
 # Ticker Label
-lblTicker = Label(frameOption, text="Ticker", width=5)
+lblTicker = Label(frameOption, text="Ticker", width=6)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
 optTickers = strategies.util.getTickers()
-cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=11)
+cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5, pady=5)
 
 # 2. TimIntv Option (시간 간격, minute1 = 1분봉)
 # TimIntv Label
-lblTimIntv = Label(frameOption, text="TimIntv", width=5)
+lblTimIntv = Label(frameOption, text="TimIntv", width=6)
 lblTimIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
 optTimIntv = ["minute1"]
@@ -117,24 +109,14 @@ cmbTimIntv.pack(side="left", padx=5, pady=5)
 
 # 3. MvAvg Option (기준 이동평균선)
 # MvAvg1 Label
-lblMvAvg1 = Label(frameOption, text="MvAvg1", width=6)
-lblMvAvg1.pack(side="left", padx=5, pady=5)
+lblMvAvg = Label(frameOption, text="MvAvg", width=6)
+lblMvAvg.pack(side="left", padx=5, pady=5)
 
 # MvAvg Combobox
-optMvAvg1 = ["7"]
-cmbMvAvg1 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg1, width=4)
-cmbMvAvg1.current(0)
-cmbMvAvg1.pack(side="left", padx=5, pady=5)
-
-# MvAvg2 Label
-lblMvAvg2 = Label(frameOption, text="MvAvg2", width=6)
-lblMvAvg2.pack(side="left", padx=5, pady=5)
-
-# MvAvg2 Combobox
-optMvAvg2 = ["30"]
-cmbMvAvg2 = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg2, width=4)
-cmbMvAvg2.current(0)
-cmbMvAvg2.pack(side="left", padx=5, pady=5)
+optMvAvg = ["[ 7, 30 ]"]
+cmbMvAvg = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg, width=10)
+cmbMvAvg.current(0)
+cmbMvAvg.pack(side="left", padx=5, pady=5)
 
 # 4. Amount Option
 # Amount Label
