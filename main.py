@@ -36,7 +36,7 @@ def startTrade():
   mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
-  strategies.ttsMa.main(txtLog, ticker, timIntv, mvAvg, amount) 
+  strategies.ttsMa.main(txtLog, ticker, timIntv, mvAvg[2:-2].split(', '), amount) 
 
   txtLog.insert(END, "\nTrade Start!")
   txtLog.update()
