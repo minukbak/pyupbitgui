@@ -39,8 +39,8 @@ def getMarketSellPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
 
-def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
-  
+def main(txtLog, ticker, timIntv, mvAvg, amount):
+
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
   strtBalance = amount # 시작 잔고
@@ -50,6 +50,9 @@ def main(ticker, timIntv, mvAvg1, mvAvg2, amount):
   sellPrice = 0.0 # 매도가
   curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
+  
+  mvAvg1 = mvAvg[0] # 기준 이동평균선
+  mvAvg2 = mvAvg[1]
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   balance = upbit.get_balance("KRW")
