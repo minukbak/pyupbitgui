@@ -5,6 +5,9 @@ import time
 import json
 import pprint
 
+import tkinter.ttk as ttk
+from tkinter import *
+
 from . import util
 upbit = util.accessUpbit()
 
@@ -57,11 +60,17 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   balance = upbit.get_balance("KRW")
   if (strtBalance * (1.0 - fee)) > balance:
-    print("시작 금액이 부족합니다. ( 최대 가능 금액:", "{:,}".format(round(balance)), ")")
-    exit()
+    txtLog.delete('1.0', END)
+    txtLog.insert(END, "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(balance)) + "원 )\n")
+    txtLog.update()
+    txtLog.see(END)
+    return
 
   startTime = datetime.datetime.now()
-  print("autotrade start - " + startTime.strftime("%H:%M:%S"))
+  txtLog.delete('1.0', END)
+  txtLog.insert(END, "autotrade start - " + startTime.strftime("%H:%M:%S") + "\n")
+  txtLog.update()
+  txtLog.see(END)
   elapsedTime = (datetime.datetime.now() - startTime)
 
   while True:
@@ -78,8 +87,11 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
         sellPrice = getMarketSellPrice(ticker)
         endBalance = (tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee)
         holding = False
-        print("매도 발생 - 매도가:", sellPrice, "매도 총액:", round(endBalance))
-        print("매도 주문 번호:", resp['uuid'])
+
+        txtLog.insert(END, f"\n매도 발생 - 매도가: {sellPrice}, 매도 총액: {round(endBalance)}\n")
+        txtLog.insert(END, f"매도 주문 번호: {resp['uuid']}\n")
+        txtLog.update()
+        txtLog.see(END)
 
     # 매수
     # 해당 코인을 가지고 있지 않고, 매수 조건이 True일 때
@@ -88,14 +100,19 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
         resp = upbit.buy_market_order(ticker, amount)
         buyPrice = getMarketBuyPrice(ticker)
         holding = True
-        print("매수 발생 - 매수가:", buyPrice, "매수 총액:", round(endBalance))
-        print("매수 주문 번호:", resp['uuid'])
+
+        txtLog.insert(END, f"\n매수 발생 - 매수가: {buyPrice}, 매수 총액: {round(endBalance)}\n")
+        txtLog.insert(END, f"매수 주문 번호: {resp['uuid']}\n")
+        txtLog.update()
+        txtLog.see(END)
 
     elapsedTime = (datetime.datetime.now() - startTime)
     curPrice = pyupbit.get_current_price(ticker)
 
     # 상태 출력
-    print(f"{ticker} - MA:({mvAvg1}, {mvAvg2}) - 투자금: {strtBalance}원")
-    print(f"현재가: {curPrice}원, 보유: {holding}, 경과: {elapsedTime}")
+    txtLog.insert(END, f"\n{ticker} - MA:({mvAvg1}, {mvAvg2}) - 투자금: {strtBalance}원\n")
+    txtLog.insert(END, f"현재가: {curPrice}원, 보유: {holding}, 경과: {elapsedTime}\n")
+    txtLog.update()
+    txtLog.see(END)
 
-    time.sleep(1)
+    time.sleep(0.5)

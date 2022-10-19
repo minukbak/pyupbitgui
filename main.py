@@ -38,10 +38,6 @@ def startTrade():
   
   strategies.ttsMa.main(txtLog, ticker, timIntv, mvAvg[2:-2].split(', '), amount) 
 
-  txtLog.insert(END, "\nTrade Start!")
-  txtLog.update()
-  txtLog.see(END)
-
 # 거래 종료(버튼)
 def endTrade():
   # loop 종료
