@@ -115,4 +115,4 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
     txtLog.update()
     txtLog.see(END)
 
-    time.sleep(0.5)
+    time.sleep(0.8)
