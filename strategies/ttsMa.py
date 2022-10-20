@@ -41,6 +41,12 @@ def getMarketBuyPrice(ticker):
 def getMarketSellPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
+# 트레이드 종료
+def stopTrading(txtResult):
+  txtResult.insert(END, "종료시간: " + datetime.datetime.now().strftime("%H:%M:%S") + "\n")
+  txtResult.update()
+  txtResult.see(END)z
+  return
 
 def main(txtLog, ticker, timIntv, mvAvg, amount):
 

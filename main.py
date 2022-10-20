@@ -40,11 +40,8 @@ def startTrade():
 
 # 거래 종료(버튼)
 def endTrade():
-  # loop 종료
   # result에 결과 출력
-  txtResult.insert(END, "\nTrade End!")
-  txtResult.update()
-  txtResult.see(END)
+  strategies.ttsMa.stopTrading(txtResult)
 
   # 결과 저장
   saveFile()
