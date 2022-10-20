@@ -45,7 +45,7 @@ def getMarketSellPrice(ticker):
 def stopTrading(txtResult):
   txtResult.insert(END, "종료시간: " + datetime.datetime.now().strftime("%H:%M:%S") + "\n")
   txtResult.update()
-  txtResult.see(END)z
+  txtResult.see(END)
   return
 
 def main(txtLog, ticker, timIntv, mvAvg, amount):
