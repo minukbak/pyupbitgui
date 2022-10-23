@@ -36,7 +36,7 @@ def startTrade():
   mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
-  strategies.ttsMa.main(txtLog, ticker, timIntv, mvAvg[2:-2].split(', '), amount) 
+  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtStatus, txtLog) 
 
 # 거래 종료(버튼)
 def endTrade():
@@ -129,7 +129,7 @@ frameStatus.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(frameStatus)
 scrollbar.pack(side="right", fill="y")
 
-txtStatus = Text(frameStatus, height=5, yscrollcommand=scrollbar.set)
+txtStatus = Text(frameStatus, height=4, yscrollcommand=scrollbar.set)
 txtStatus.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtStatus.yview)
 
@@ -140,7 +140,7 @@ frameLog.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(frameLog)
 scrollbar.pack(side="right", fill="y")
 
-txtLog = Text(frameLog, height=18, yscrollcommand=scrollbar.set)
+txtLog = Text(frameLog, height=20, yscrollcommand=scrollbar.set)
 txtLog.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtLog.yview)
 
@@ -151,7 +151,7 @@ resultFrame.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(resultFrame)
 scrollbar.pack(side="right", fill="y")
 
-txtResult = Text(resultFrame, height=6, yscrollcommand=scrollbar.set)
+txtResult = Text(resultFrame, height=5, yscrollcommand=scrollbar.set)
 txtResult.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtResult.yview)
 

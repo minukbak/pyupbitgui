@@ -48,7 +48,7 @@ def stopTrading(txtResult):
   txtResult.see(END)
   return
 
-def main(txtLog, ticker, timIntv, mvAvg, amount):
+def main(ticker, timIntv, mvAvg, amount, txtStatus, txtLog):
 
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
@@ -66,10 +66,10 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   balance = upbit.get_balance("KRW")
   if (strtBalance * (1.0 - fee)) > balance:
-    txtLog.delete('1.0', END)
-    txtLog.insert(END, "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(balance)) + "원 )\n")
-    txtLog.update()
-    txtLog.see(END)
+    txtStatus.delete('1.0', END)
+    txtStatus.insert(END, "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(balance)) + "원 )\n")
+    txtStatus.update()
+    txtStatus.see(END)
     return
 
   startTime = datetime.datetime.now()
@@ -116,9 +116,10 @@ def main(txtLog, ticker, timIntv, mvAvg, amount):
     curPrice = pyupbit.get_current_price(ticker)
 
     # 상태 출력
-    txtLog.insert(END, f"\n{ticker} - MA:({mvAvg1}, {mvAvg2}) - 투자금: {strtBalance}원\n")
-    txtLog.insert(END, f"현재가: {curPrice}원, 보유: {holding}, 경과: {elapsedTime}\n")
-    txtLog.update()
-    txtLog.see(END)
+    txtStatus.delete('1.0', END)
+    txtStatus.insert(END, f"\n{ticker} - MA:({mvAvg1}, {mvAvg2}) - 투자금: {strtBalance}원\n")
+    txtStatus.insert(END, f"현재가: {curPrice}원, 보유: {holding}, 경과: {elapsedTime}\n")
+    txtStatus.update()
+    txtStatus.see(END)
 
     time.sleep(0.8)
