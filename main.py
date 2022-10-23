@@ -122,15 +122,25 @@ tBoxAmt = ttk.Entry(frameOption, textvariable=amount, justify='right', width=12)
 tBoxAmt.insert(0, "10000")
 tBoxAmt.pack(side="left", padx=5, pady=5)
 
+# Status Frame
+frameStatus = LabelFrame(root, text=" Status ")
+frameStatus.pack(fill="both", padx=5, pady=5)
+
+scrollbar = Scrollbar(frameStatus)
+scrollbar.pack(side="right", fill="y")
+
+txtStatus = Text(frameStatus, height=5, yscrollcommand=scrollbar.set)
+txtStatus.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txtStatus.yview)
+
 # Log Frame
 frameLog = LabelFrame(root, text=" Log ")
 frameLog.pack(fill="both", padx=5, pady=5)
-# 스크롤 바
+
 scrollbar = Scrollbar(frameLog)
 scrollbar.pack(side="right", fill="y")
 
-# 로그 영역
-txtLog = Text(frameLog, height=24, yscrollcommand=scrollbar.set)
+txtLog = Text(frameLog, height=18, yscrollcommand=scrollbar.set)
 txtLog.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtLog.yview)
 
@@ -141,7 +151,7 @@ resultFrame.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(resultFrame)
 scrollbar.pack(side="right", fill="y")
 
-txtResult = Text(resultFrame, height=7, yscrollcommand=scrollbar.set)
+txtResult = Text(resultFrame, height=6, yscrollcommand=scrollbar.set)
 txtResult.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtResult.yview)
 
