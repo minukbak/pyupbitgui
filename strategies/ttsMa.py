@@ -10,6 +10,7 @@ from tkinter import *
 
 from . import util
 upbit = util.accessUpbit()
+flag = True
 
 # Calculate The Moving Average (이동 평균선 계산)
 def calMvAvg(ticker, timIntv, cnt):
@@ -46,6 +47,8 @@ def stopTrading(txtResult):
   txtResult.insert(END, "종료시간: " + datetime.datetime.now().strftime("%H:%M:%S") + "\n")
   txtResult.update()
   txtResult.see(END)
+  global flag
+  flag = False
   return
 
 def main(ticker, timIntv, mvAvg, amount, txtStatus, txtLog):
@@ -78,7 +81,7 @@ def main(ticker, timIntv, mvAvg, amount, txtStatus, txtLog):
   txtLog.see(END)
   elapsedTime = (datetime.datetime.now() - startTime)
 
-  while True:
+  while flag == True:
     # 시작 동시 매수 방지: Sell condition은 MA1 <= MA2 이고 이 상태에서는 매수되지 않음
     if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
       operMode = True
