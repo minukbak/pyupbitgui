@@ -12,34 +12,34 @@ from . import util
 upbit = util.accessUpbit()
 flag = True
 
-# Calculate The Moving Average (이동 평균선 계산)
+# 이동 평균선 계산
 def calMvAvg(ticker, timIntv, cnt):
   df = pyupbit.get_ohlcv(ticker, timIntv, cnt+1)
   mvAvg = df['close'].rolling(cnt).mean().iloc[-2]
   return mvAvg
 
-# Condition of Buying (매수 조건)
-def condxBuy(ticker, timIntv, mvAvg1, mvAvg2):
+# 매수 조건
+def condBuy(ticker, timIntv, mvAvg1, mvAvg2):
   calMvAvg1 = calMvAvg(ticker, timIntv, mvAvg1)
   calMvAvg2 = calMvAvg(ticker, timIntv, mvAvg2)
   if calMvAvg1 >= calMvAvg2:
     return True
   return False
 
-# Condition of Selling (매도 조건)
-def condxSell(ticker, timIntv, mvAvg1, mvAvg2):
+# 매도 조건
+def condSell(ticker, timIntv, mvAvg1, mvAvg2):
   calMvAvg1 = calMvAvg(ticker, timIntv, mvAvg1)
   calMvAvg2 = calMvAvg(ticker, timIntv, mvAvg2)
   if calMvAvg1 <= calMvAvg2:
     return True
   return False
 
-# First ask quote (시장가 매수 시 체결 위치 / 매도 1 호가)
-def getMarketBuyPrice(ticker):
+# 시장가 매수 시 체결 위치 / 매도 1 호가
+def getMBPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["ask_price"]
 
-# First bid quote (시장가 매도 시 체결 위치 / 매수 1 호가)
-def getMarketSellPrice(ticker):
+# 시장가 매도 시 체결 위치 / 매수 1 호가
+def getMSPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
 # 트레이드 종료
@@ -83,16 +83,16 @@ def main(ticker, timIntv, mvAvg, amount, txtStatus, txtLog):
 
   while flag == True:
     # 시작 동시 매수 방지: Sell condition은 MA1 <= MA2 이고 이 상태에서는 매수되지 않음
-    if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
+    if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
       operMode = True
 
     # 매도
     # 해당 코인을 가지고 있고, 매도 조건이 True일 때
     if holding is True and operMode is True:
-      if condxSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
+      if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
         tikrBalance = upbit.get_balance(ticker)
         resp = upbit.sell_market_order(ticker, tikrBalance)
-        sellPrice = getMarketSellPrice(ticker)
+        sellPrice = getMSPrice(ticker)
         endBalance = (tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee)
         holding = False
 
@@ -104,9 +104,9 @@ def main(ticker, timIntv, mvAvg, amount, txtStatus, txtLog):
     # 매수
     # 해당 코인을 가지고 있지 않고, 매수 조건이 True일 때
     if holding is False and operMode is True:
-      if condxBuy(ticker, timIntv, mvAvg1, mvAvg2) is True:
+      if condBuy(ticker, timIntv, mvAvg1, mvAvg2) is True:
         resp = upbit.buy_market_order(ticker, amount)
-        buyPrice = getMarketBuyPrice(ticker)
+        buyPrice = getMBPrice(ticker)
         holding = True
 
         txtLog.insert(END, f"\n매수 발생 - 매수가: {buyPrice}, 매수 총액: {round(endBalance)}\n")
