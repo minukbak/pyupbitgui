@@ -13,21 +13,21 @@ def openFile():
   # log.txt 열기
   if os.path.isfile(fileLog): # 파일 있으면 True, 없으면 False
     with open(fileLog, "r", encoding="utf8") as file:
-      txtLog.delete("1.0", END) # 텍스트 위젯 본문 삭제
-      txtLog.insert(END, file.read()) # 파일 내용을 본문에 입력
+      txtBody.delete("1.0", END) # 텍스트 위젯 본문 삭제
+      txtBody.insert(END, file.read()) # 파일 내용을 본문에 입력
   # result.txt 열기
   if os.path.isfile(fileResult):
     with open(fileResult, "r", encoding="utf8") as file:
-      txtResult.delete("1.0", END)
-      txtResult.insert(END, file.read())
+      txtBottom.delete("1.0", END)
+      txtBottom.insert(END, file.read())
 
 def saveFile():
   # log.txt 저장
   with open(fileLog, "w", encoding="utf8") as file:
-    file.write(txtLog.get("1.0", END)) # 모든 내용을 저장
+    file.write(txtBody.get("1.0", END)) # 모든 내용을 저장
   # result.txt 저장
   with open(fileResult, "w", encoding="utf8") as file:
-    file.write(txtResult.get("1.0", END))
+    file.write(txtBottom.get("1.0", END))
 
 # 거래 시작(버튼)
 def startTrade():
@@ -36,17 +36,14 @@ def startTrade():
   mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
-  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtStatus, txtLog) 
+  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody) 
 
 # 거래 종료(버튼)
 def endTrade():
   # result에 결과 출력
-  strategies.ttsMa.stopTrading(txtResult)
-
+  strategies.ttsMa.stopTrading(txtBottom)
   # 결과 저장
   saveFile()
-  # 만약 프로그램이 실행하고 있지 않다면
-  # root.quit()
 
 ######################################
 
@@ -129,9 +126,9 @@ frameStatus.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(frameStatus)
 scrollbar.pack(side="right", fill="y")
 
-txtStatus = Text(frameStatus, height=4, yscrollcommand=scrollbar.set)
-txtStatus.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=txtStatus.yview)
+txtHead = Text(frameStatus, height=4, yscrollcommand=scrollbar.set)
+txtHead.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txtHead.yview)
 
 # Log Frame
 frameLog = LabelFrame(root, text=" Log ")
@@ -140,9 +137,9 @@ frameLog.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(frameLog)
 scrollbar.pack(side="right", fill="y")
 
-txtLog = Text(frameLog, height=20, yscrollcommand=scrollbar.set)
-txtLog.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=txtLog.yview)
+txtBody = Text(frameLog, height=20, yscrollcommand=scrollbar.set)
+txtBody.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txtBody.yview)
 
 # Result Frame
 resultFrame = LabelFrame(root, text=" Result ")
@@ -151,9 +148,9 @@ resultFrame.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(resultFrame)
 scrollbar.pack(side="right", fill="y")
 
-txtResult = Text(resultFrame, height=5, yscrollcommand=scrollbar.set)
-txtResult.pack(side="left", fill="both", expand=True)
-scrollbar.config(command=txtResult.yview)
+txtBottom = Text(resultFrame, height=5, yscrollcommand=scrollbar.set)
+txtBottom.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txtBottom.yview)
 
 # Execute Frame
 frameExecute = Frame(root)
