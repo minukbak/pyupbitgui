@@ -74,11 +74,6 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   basisTime = datetime.datetime.now()
   startTime = basisTime.strftime("%H:%M:%S")
 
-  txtBody.delete('1.0', END)
-  txtBody.insert(END, "autotrade start - " + startTime + "\n")
-  txtBody.update()
-  txtBody.see(END)
-
   while flag == True:
     now = datetime.datetime.now().strftime("%H:%M:%S")
 
