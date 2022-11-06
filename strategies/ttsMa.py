@@ -55,9 +55,9 @@ def stopTrading(txtBottom):
 def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
-  startBlc = amount # 시작 잔고
-  endBlc = startBlc # 끝 잔고
-  tikrBlc = 0.0 # 코인 잔고
+  startBalance = amount # 시작 잔고
+  endBalance = startBalance # 끝 잔고
+  tikrBalance = 0.0 # 코인 잔고
   buyPrice = 0.0 # 매수가
   sellPrice = 0.0 # 매도가
   curPrice = 0.0 # 현재가
@@ -67,10 +67,10 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
   mvAvg2 = int(mvAvg[1])
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
-  myBlc = upbit.get_balance("KRW")
-  if (startBlc * (1.0 - fee)) > myBlc:
+  myBalance = upbit.get_balance("KRW")
+  if (startBalance * (1.0 - fee)) > myBalance:
     txtHead.delete('1.0', END)
-    txtHead.insert(END, "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(myBlc)) + "원 )\n")
+    txtHead.insert(END, "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(myBalance)) + "원 )\n")
     txtHead.update()
     txtHead.see(END)
     return
@@ -92,13 +92,12 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
     # 해당 코인을 가지고 있고, 매도 조건이 True일 때
     if holding is True and operMode is True:
       if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
-        tikrBlc = upbit.get_balance(ticker)
-        resp = upbit.sell_market_order(ticker, tikrBlc)
+        tikrBalance = upbit.get_balance(ticker)
+        resp = upbit.sell_market_order(ticker, tikrBalance)
         sellPrice = getMSPrice(ticker)
-        endBlc = (tikrBlc * sellPrice) - (tikrBlc * sellPrice * fee)
+        endBalance = (tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee)
         holding = False
-
-        txtBody.insert(END, f"\n매도 발생 - 매도가: {sellPrice}, 매도 총액: {round(endBlc)}\n")
+        txtBody.insert(END, f"\n매도 발생 - 매도가: {sellPrice}, 매도 총액: {round(endBalance)}\n")
         txtBody.insert(END, f"매도 주문 번호: {resp['uuid']}\n")
         txtBody.update()
         txtBody.see(END)
@@ -110,8 +109,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
         resp = upbit.buy_market_order(ticker, amount)
         buyPrice = getMBPrice(ticker)
         holding = True
-
-        txtBody.insert(END, f"\n매수 발생 - 매수가: {buyPrice}, 매수 총액: {round(endBlc)}\n")
+        txtBody.insert(END, f"\n매수 발생 - 매수가: {buyPrice}, 매수 총액: {round(endBalance)}\n")
         txtBody.insert(END, f"매수 주문 번호: {resp['uuid']}\n")
         txtBody.update()
         txtBody.see(END)
@@ -119,7 +117,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
     curPrice = pyupbit.get_current_price(ticker)
     elapsedTime = (datetime.datetime.now() - basisTime)
 
-    status = [startTime, ticker, curPrice, startBlc, mvAvg, timIntv, elapsedTime]
+    status = [startTime, ticker, curPrice, startBalance, mvAvg, timIntv, elapsedTime]
 
     # 상태 출력
     txtHead.delete('1.0', END)
