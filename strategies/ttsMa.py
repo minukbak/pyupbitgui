@@ -84,6 +84,8 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
   txtBody.see(END)
 
   while flag == True:
+    now = datetime.datetime.now().strftime("%H:%M:%S")
+
     # 시작 동시 매수 방지: Sell condition은 MA1 <= MA2 이고 이 상태에서는 매수되지 않음
     if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
       operMode = True
@@ -94,25 +96,39 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
       if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
         tikrBalance = upbit.get_balance(ticker)
         resp = upbit.sell_market_order(ticker, tikrBalance)
+        uuid = resp['uuid']
         sellPrice = getMSPrice(ticker)
-        endBalance = (tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee)
+        endBalance = round((tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee), 1)
         holding = False
-        txtBody.insert(END, f"\n매도 발생 - 매도가: {sellPrice}, 매도 총액: {round(endBalance)}\n")
-        txtBody.insert(END, f"매도 주문 번호: {resp['uuid']}\n")
+        state = "Sold"
+
+        transaction = [now, state, sellPrice, endBalance, uuid]
+
+        txtBody.insert(END, f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
+        txtBody.insert(END, f"주문 번호: {transaction[4]}\n")
         txtBody.update()
         txtBody.see(END)
+
+        time.sleep(1)
 
     # 매수
     # 해당 코인을 가지고 있지 않고, 매수 조건이 True일 때
     if holding is False and operMode is True:
       if condBuy(ticker, timIntv, mvAvg1, mvAvg2) is True:
         resp = upbit.buy_market_order(ticker, amount)
+        uuid = resp['uuid']
         buyPrice = getMBPrice(ticker)
         holding = True
-        txtBody.insert(END, f"\n매수 발생 - 매수가: {buyPrice}, 매수 총액: {round(endBalance)}\n")
-        txtBody.insert(END, f"매수 주문 번호: {resp['uuid']}\n")
+        state = "Bought"
+
+        transaction = [now, state, buyPrice, endBalance, uuid]
+
+        txtBody.insert(END, f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
+        txtBody.insert(END, f"주문 번호: {transaction[4]}\n")
         txtBody.update()
         txtBody.see(END)
+
+        time.sleep(1)
 
     curPrice = pyupbit.get_current_price(ticker)
     elapsedTime = (datetime.datetime.now() - basisTime)
