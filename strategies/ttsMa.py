@@ -77,6 +77,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
 
   basisTime = datetime.datetime.now()
   startTime = basisTime.strftime("%H:%M:%S")
+
   txtBody.delete('1.0', END)
   txtBody.insert(END, "autotrade start - " + startTime + "\n")
   txtBody.update()
@@ -115,13 +116,15 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
         txtBody.update()
         txtBody.see(END)
 
-    elapsedTime = (datetime.datetime.now() - basisTime)
     curPrice = pyupbit.get_current_price(ticker)
+    elapsedTime = (datetime.datetime.now() - basisTime)
+
+    status = [startTime, ticker, curPrice, startBlc, mvAvg, timIntv, elapsedTime]
 
     # 상태 출력
     txtHead.delete('1.0', END)
-    txtHead.insert(END, f"\n{ticker} - MA:({mvAvg1}, {mvAvg2}) - 투자금: {startBlc}원\n")
-    txtHead.insert(END, f"현재가: {curPrice}원, 보유: {holding}, 경과: {elapsedTime}\n")
+    txtHead.insert(END, f"\n시작시간: {status[0]}, 코인명: {status[1]}, 현재가: {status[2]}, 투자금: {status[3]}\n")
+    txtHead.insert(END, f"MA: {status[4]}, 간격: {status[5]}, 경과: {status[6]}\n")
     txtHead.update()
     txtHead.see(END)
 
