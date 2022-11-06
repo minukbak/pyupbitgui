@@ -36,12 +36,12 @@ def startTrade():
   mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
-  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody) 
+  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
 
 # 거래 종료(버튼)
 def endTrade():
   # result에 결과 출력
-  strategies.ttsMa.stopTrading(txtBottom)
+  strategies.ttsMa.stopTrading()
   # 결과 저장
   saveFile()
 

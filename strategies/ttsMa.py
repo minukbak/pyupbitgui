@@ -43,16 +43,12 @@ def getMSPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
 # 트레이드 종료
-def stopTrading(txtBottom):
-  endTime = datetime.datetime.now().strftime("%H:%M:%S")
-  txtBottom.insert(END, "종료시간: " + endTime + "\n")
-  txtBottom.update()
-  txtBottom.see(END)
+def stopTrading():
   global flag
   flag = False
   return
 
-def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
+def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
   startBalance = amount # 시작 잔고
@@ -143,3 +139,11 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody):
     txtHead.see(END)
 
     time.sleep(0.8)
+  
+  endTime = datetime.datetime.now().strftime("%H:%M:%S")
+  settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
+
+  txtBottom.insert(END, f"종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
+  txtBottom.insert(END, f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
+  txtBottom.update()
+  txtBottom.see(END)
