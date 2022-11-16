@@ -37,6 +37,7 @@ def startTrade():
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
   strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
+  strategies.ttsMa.initTrading()
 
 # 거래 종료(버튼)
 def endTrade():

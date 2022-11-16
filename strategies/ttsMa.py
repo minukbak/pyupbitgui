@@ -48,6 +48,12 @@ def stopTrading():
   flag = False
   return
 
+  # 초기화
+def initTrading():
+  global flag
+  flag = True
+  return
+
 def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
@@ -138,6 +144,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   endTime = datetime.datetime.now().strftime("%H:%M:%S")
   settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
 
+  txtBottom.delete('1.0', END)
   txtBottom.insert(END, f"종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
   txtBottom.insert(END, f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
   txtBottom.update()
