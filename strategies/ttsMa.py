@@ -10,7 +10,6 @@ from tkinter import *
 
 from . import util
 upbit = util.accessUpbit()
-flag = True
 
 # 이동 평균선 계산
 def calMvAvg(ticker, timIntv, cnt):
@@ -69,6 +68,14 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   
   mvAvg1 = int(mvAvg[0]) # 기준 이동평균선
   mvAvg2 = int(mvAvg[1])
+
+  # 모든 텍스트 입력 박스 초기화
+  txtHead.delete('1.0', END)
+  txtHead.update()
+  txtBody.delete('1.0', END)
+  txtBody.update()
+  txtBottom.delete('1.0', END)
+  txtBottom.update()
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   myBalance = upbit.get_balance("KRW")
@@ -145,9 +152,8 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   
   endTime = datetime.datetime.now().strftime("%H:%M:%S")
   settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
-
-  txtBottom.delete('1.0', END)
-  txtBottom.insert(END, f"종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
+  
+  txtBottom.insert(END, f"\n종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
   txtBottom.insert(END, f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
   txtBottom.update()
   txtBottom.see(END)

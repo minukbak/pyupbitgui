@@ -4,17 +4,24 @@ from tkinter import *
 
 import strategies
 
+# 직전 상태 기록 파일
+fileStatus = "txt_status.txt"
 # 직전 로그 기록 파일
-fileLog = "log.txt"
+fileLog = "txt_log.txt"
 # 직전 결과 기록 파일
-fileResult = "result.txt"
+fileResult = "txt_result.txt"
 
 def openFile():
+  # status.txt 열기
+  if os.path.isfile(fileStatus): # 파일 있으면 True, 없으면 False
+    with open(fileStatus, "r", encoding="utf8") as file:
+      txtHead.delete("1.0", END) # 텍스트 위젯 본문 삭제
+      txtHead.insert(END, file.read()) # 파일 내용을 본문에 입력
   # log.txt 열기
-  if os.path.isfile(fileLog): # 파일 있으면 True, 없으면 False
+  if os.path.isfile(fileLog):
     with open(fileLog, "r", encoding="utf8") as file:
-      txtBody.delete("1.0", END) # 텍스트 위젯 본문 삭제
-      txtBody.insert(END, file.read()) # 파일 내용을 본문에 입력
+      txtBody.delete("1.0", END)
+      txtBody.insert(END, file.read())
   # result.txt 열기
   if os.path.isfile(fileResult):
     with open(fileResult, "r", encoding="utf8") as file:
@@ -22,9 +29,12 @@ def openFile():
       txtBottom.insert(END, file.read())
 
 def saveFile():
+  # status.txt 저장
+  with open(fileStatus, "w", encoding="utf8") as file:
+    file.write(txtHead.get("1.0", END)) # 모든 내용을 저장
   # log.txt 저장
   with open(fileLog, "w", encoding="utf8") as file:
-    file.write(txtBody.get("1.0", END)) # 모든 내용을 저장
+    file.write(txtBody.get("1.0", END))
   # result.txt 저장
   with open(fileResult, "w", encoding="utf8") as file:
     file.write(txtBottom.get("1.0", END))
@@ -36,15 +46,15 @@ def startTrade():
   mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
   
-  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
   strategies.ttsMa.initTrading()
+  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
 
 # 거래 종료(버튼)
 def endTrade():
   # result에 결과 출력
   strategies.ttsMa.stopTrading()
-  # 결과 저장
-  saveFile()
+  # 결과 저장 (거래가 정상 종료 되었을 경우)
+  # saveFile()
 
 ######################################
 
@@ -57,10 +67,9 @@ root.geometry("660x580+100+100") # 가로 * 세로 + x좌표 + y좌표
 menuBar = Menu(root)
 # 파일
 menuFile = Menu(menuBar, tearoff=0)
-menuFile.add_command(label="Open File...", command=openFile)
+menuFile.add_command(label="Previous Log", command=openFile)
+menuFile.add_command(label="Save Log", command=saveFile)
 menuFile.add_separator()
-# menuFile.add_command(label="Save", command=saveFile)
-# menuFile.add_separator()
 menuFile.add_command(label="Exit", command=root.quit)
 menuBar.add_cascade(label="File", menu=menuFile)
 
