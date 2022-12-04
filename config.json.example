@@ -1,6 +1,0 @@
-{
-  "DEFAULT": {
-      "ACCESS_KEY": "access-key-of-upbit",
-      "SECRET_KEY": "secret-key-of-upbit"
-    }
-}
