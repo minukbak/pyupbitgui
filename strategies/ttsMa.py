@@ -64,6 +64,8 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   sellPrice = 0.0 # 매도가
   curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
+
+  setSleep = 0.8 # 과트래픽 방지
   
   mvAvg1 = int(mvAvg[0]) # 기준 이동평균선
   mvAvg2 = int(mvAvg[1])
@@ -106,7 +108,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
         txtBody.update()
         txtBody.see(END)
 
-        time.sleep(1)
+        time.sleep(setSleep)
 
     # 매수
     # 해당 코인을 가지고 있지 않고, 매수 조건이 True일 때
@@ -125,7 +127,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
         txtBody.update()
         txtBody.see(END)
 
-        time.sleep(1)
+        time.sleep(setSleep)
 
     curPrice = pyupbit.get_current_price(ticker)
     elapsedTime = (datetime.datetime.now() - basisTime)
@@ -139,7 +141,7 @@ def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     txtHead.update()
     txtHead.see(END)
 
-    time.sleep(0.8)
+    time.sleep(setSleep)
   
   endTime = datetime.datetime.now().strftime("%H:%M:%S")
   settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
