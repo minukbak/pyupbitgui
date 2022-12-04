@@ -42,16 +42,16 @@ def getMBPrice(ticker):
 def getMSPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
+ # 트레이드 시작 초기화
+def initTrading():
+  global flag
+  flag = True
+  return
+
 # 트레이드 종료
 def stopTrading():
   global flag
   flag = False
-  return
-
-  # 초기화
-def initTrading():
-  global flag
-  flag = True
   return
 
 def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
