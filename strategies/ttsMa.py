@@ -8,9 +8,6 @@ import pprint
 import tkinter.ttk as ttk
 from tkinter import *
 
-from . import util
-upbit = util.accessUpbit()
-
 # 이동 평균선 계산
 def calMvAvg(ticker, timIntv, cnt):
   df = pyupbit.get_ohlcv(ticker, timIntv, cnt+1)
@@ -53,7 +50,7 @@ def stopTrading():
   flag = False
   return
 
-def main(ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
+def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
   startBalance = amount # 시작 잔고

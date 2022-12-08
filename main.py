@@ -44,10 +44,12 @@ def startTrade():
   ticker = cmbTickers.get() # 프로그램 적용 코인
   timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
   mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
-  amount = float(tBoxAmt.get()) # 프로그램 시작 금액  
+  amount = float(tBoxAmt.get()) # 프로그램 시작 금액 
+
+  upbit = strategies.util.accessUpbit()
   
   strategies.ttsMa.initTrading()
-  strategies.ttsMa.main(ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
+  strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
 
 # 거래 종료(버튼)
 def endTrade():
@@ -93,6 +95,7 @@ lblTicker = Label(frameOption, text="Ticker", width=6)
 lblTicker.pack(side="left", padx=5, pady=5)
 # Ticker Combobox
 optTickers = strategies.util.getTickers()
+
 cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5, pady=5)
