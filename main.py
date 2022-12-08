@@ -158,7 +158,7 @@ resultFrame.pack(fill="both", padx=5, pady=5)
 scrollbar = Scrollbar(resultFrame)
 scrollbar.pack(side="right", fill="y")
 
-txtBottom = Text(resultFrame, height=5, yscrollcommand=scrollbar.set)
+txtBottom = Text(resultFrame, height=4, yscrollcommand=scrollbar.set)
 txtBottom.pack(side="left", fill="both", expand=True)
 scrollbar.config(command=txtBottom.yview)
 
