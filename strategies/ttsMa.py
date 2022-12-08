@@ -5,9 +5,6 @@ import time
 import json
 import pprint
 
-import tkinter.ttk as ttk
-from tkinter import *
-
 # 이동 평균선 계산
 def calMvAvg(ticker, timIntv, cnt):
   df = pyupbit.get_ohlcv(ticker, timIntv, cnt+1)
@@ -67,20 +64,20 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   mvAvg2 = int(mvAvg[1])
 
   # 모든 텍스트 입력 박스 초기화
-  txtHead.delete('1.0', END)
+  txtHead.delete('1.0', 'end')
   txtHead.update()
-  txtBody.delete('1.0', END)
+  txtBody.delete('1.0', 'end')
   txtBody.update()
-  txtBottom.delete('1.0', END)
+  txtBottom.delete('1.0', 'end')
   txtBottom.update()
 
   # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
   myBalance = upbit.get_balance("KRW")
   if (startBalance * (1.0 - fee)) > myBalance:
-    txtHead.delete('1.0', END)
-    txtHead.insert(END, "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(myBalance)) + "원 )\n")
+    txtHead.delete('1.0', 'end')
+    txtHead.insert('end', "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(myBalance)) + "원 )\n")
     txtHead.update()
-    txtHead.see(END)
+    txtHead.see('end')
     return
 
   basisTime = datetime.datetime.now()
@@ -107,10 +104,10 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
 
         transaction = [now, state, sellPrice, endBalance, uuid]
 
-        txtBody.insert(END, f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
-        txtBody.insert(END, f"주문 번호: {transaction[4]}\n")
+        txtBody.insert('end', f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
+        txtBody.insert('end', f"주문 번호: {transaction[4]}\n")
         txtBody.update()
-        txtBody.see(END)
+        txtBody.see('end')
 
         time.sleep(setSleep)
 
@@ -126,10 +123,10 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
 
         transaction = [now, state, buyPrice, endBalance, uuid]
 
-        txtBody.insert(END, f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
-        txtBody.insert(END, f"주문 번호: {transaction[4]}\n")
+        txtBody.insert('end', f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
+        txtBody.insert('end', f"주문 번호: {transaction[4]}\n")
         txtBody.update()
-        txtBody.see(END)
+        txtBody.see('end')
 
         time.sleep(setSleep)
 
@@ -139,18 +136,18 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     status = [startTime, ticker, curPrice, startBalance, mvAvg, timIntv, elapsedTime]
 
     # 상태 출력
-    txtHead.delete('1.0', END)
-    txtHead.insert(END, f"\n시작시간: {status[0]}, 코인명: {status[1]}, 현재가: {status[2]}, 투자금: {status[3]}\n")
-    txtHead.insert(END, f"MA: {status[4]}, 간격: {status[5]}, 경과: {status[6]}\n")
+    txtHead.delete('1.0', 'end')
+    txtHead.insert('end', f"\n시작시간: {status[0]}, 코인명: {status[1]}, 현재가: {status[2]}, 투자금: {status[3]}\n")
+    txtHead.insert('end', f"MA: {status[4]}, 간격: {status[5]}, 경과: {status[6]}\n")
     txtHead.update()
-    txtHead.see(END)
+    txtHead.see('end')
 
     time.sleep(setSleep)
   
   endTime = datetime.datetime.now().strftime("%H:%M:%S")
   settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
   
-  txtBottom.insert(END, f"\n종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
-  txtBottom.insert(END, f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
+  txtBottom.insert('end', f"\n종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
+  txtBottom.insert('end', f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
   txtBottom.update()
-  txtBottom.see(END)
+  txtBottom.see('end')
