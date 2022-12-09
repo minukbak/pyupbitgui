@@ -50,7 +50,13 @@ def startTrade():
   amount = float(tBoxAmt.get()) # 프로그램 시작 금액 
 
   upbit = strategies.util.accessUpbit()
-  
+
+  myBalance = strategies.util.getBalance(upbit, amount)
+
+  if myBalance != False:
+    messageBox.showwarning('계좌 잔고 부족', '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
+    return
+
   strategies.ttsMa.initTrading()
   strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom)
   return

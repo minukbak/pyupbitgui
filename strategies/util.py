@@ -12,3 +12,9 @@ def accessUpbit():
 
 def getTickers():
   return pyupbit.get_tickers(fiat="KRW")
+
+def getBalance(upbit, amount):
+  fee = 0.0005 # 수수료
+  balance = upbit.get_balance("KRW")
+
+  return balance if (amount * (1.0 - fee)) > balance else False

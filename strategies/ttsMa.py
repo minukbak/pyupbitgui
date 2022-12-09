@@ -71,15 +71,6 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   txtBottom.delete('1.0', 'end')
   txtBottom.update()
 
-  # 잔고가 프로그램 최소 시작 금액보다 작으면 종료
-  myBalance = upbit.get_balance("KRW")
-  if (startBalance * (1.0 - fee)) > myBalance:
-    txtHead.delete('1.0', 'end')
-    txtHead.insert('end', "계좌 잔고가 부족합니다. ( 최대 가능 금액:" + "{:,}".format(round(myBalance)) + "원 )\n")
-    txtHead.update()
-    txtHead.see('end')
-    return
-
   basisTime = datetime.datetime.now()
   startTime = basisTime.strftime("%H:%M:%S")
 
