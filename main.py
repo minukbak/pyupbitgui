@@ -27,6 +27,7 @@ def openFile():
     with open(fileResult, "r", encoding="utf8") as file:
       txtBottom.delete("1.0", END)
       txtBottom.insert(END, file.read())
+  return
 
 def saveFile():
   # status.txt 저장
@@ -38,6 +39,7 @@ def saveFile():
   # result.txt 저장
   with open(fileResult, "w", encoding="utf8") as file:
     file.write(txtBottom.get("1.0", END))
+  return
 
 # 거래 시작(버튼)
 def startTrade():
@@ -49,7 +51,8 @@ def startTrade():
   upbit = strategies.util.accessUpbit()
   
   strategies.ttsMa.initTrading()
-  strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom) 
+  strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom)
+  return
 
 # 거래 종료(버튼)
 def endTrade():
@@ -57,6 +60,7 @@ def endTrade():
   strategies.ttsMa.stopTrading()
   # 결과 저장 (거래가 정상 종료 되었을 경우)
   # saveFile()
+  return
 
 ######################################
 

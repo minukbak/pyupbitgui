@@ -151,3 +151,5 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   txtBottom.insert('end', f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
   txtBottom.update()
   txtBottom.see('end')
+
+  return
