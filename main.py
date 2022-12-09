@@ -1,6 +1,7 @@
 import os
-import tkinter.ttk as ttk
 from tkinter import *
+import tkinter.ttk as ttk
+import tkinter.messagebox as messageBox
 
 import strategies
 
