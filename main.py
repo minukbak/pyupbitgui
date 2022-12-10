@@ -44,21 +44,24 @@ def saveFile():
 
 # 거래 시작(버튼)
 def startTrade():
-  ticker = cmbTickers.get() # 프로그램 적용 코인
-  timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
-  mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
-  amount = float(tBoxAmt.get()) # 프로그램 시작 금액 
+  status = strategies.ttsMa.checkFlag()
+  if status == True:
+    messageBox.showwarning('거래중 알림', '이미 거래가 진행중입니다. 거래 종료 후 다시 시도해주세요.')
+  else :
+    upbit = strategies.util.accessUpbit()
+    amount = float(tBoxAmt.get()) # 프로그램 시작 금액
 
-  upbit = strategies.util.accessUpbit()
+    myBalance = strategies.util.getBalance(upbit, amount)
+    if myBalance != False:
+      messageBox.showwarning('계좌 잔고 부족', '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
+      return
 
-  myBalance = strategies.util.getBalance(upbit, amount)
+    ticker = cmbTickers.get() # 프로그램 적용 코인
+    timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
+    mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
 
-  if myBalance != False:
-    messageBox.showwarning('계좌 잔고 부족', '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
-    return
-
-  strategies.ttsMa.initTrading()
-  strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom)
+    strategies.ttsMa.startTrading()
+    strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom)
   return
 
 # 거래 종료(버튼)

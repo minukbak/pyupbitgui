@@ -35,19 +35,30 @@ def getMBPrice(ticker):
 def getMSPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
- # 트레이드 시작 초기화
-def initTrading():
+# 트레이드 루프 시작 종료 flag 관리
+global flag
+flag = False
+def checkFlag():
+  return flag
+def startTrading():
   global flag
   flag = True
   return
-
-# 트레이드 종료
 def stopTrading():
   global flag
   flag = False
   return
 
 def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
+
+  # 모든 텍스트 입력 박스 초기화
+  txtHead.delete('1.0', 'end')
+  txtHead.update()
+  txtBody.delete('1.0', 'end')
+  txtBody.update()
+  txtBottom.delete('1.0', 'end')
+  txtBottom.update()
+
   holding = False  # 현재 코인 보유 여부
   operMode = False # 시작 동시 매수 방지
   startBalance = amount # 시작 잔고
@@ -57,19 +68,9 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   sellPrice = 0.0 # 매도가
   curPrice = 0.0 # 현재가
   fee = 0.0005 # 수수료
-
   setSleep = 0.8 # 과트래픽 방지
-  
   mvAvg1 = int(mvAvg[0]) # 기준 이동평균선
   mvAvg2 = int(mvAvg[1])
-
-  # 모든 텍스트 입력 박스 초기화
-  txtHead.delete('1.0', 'end')
-  txtHead.update()
-  txtBody.delete('1.0', 'end')
-  txtBody.update()
-  txtBottom.delete('1.0', 'end')
-  txtBottom.update()
 
   basisTime = datetime.datetime.now()
   startTime = basisTime.strftime("%H:%M:%S")
