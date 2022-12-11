@@ -66,10 +66,14 @@ def startTrade():
 
 # 거래 종료(버튼)
 def endTrade():
-  # result에 결과 출력
-  strategies.ttsMa.stopTrading()
-  # 결과 저장 (거래가 정상 종료 되었을 경우)
-  # saveFile()
+  status = strategies.ttsMa.checkFlag()
+  if status == True:
+    res = messageBox.askokcancel('거래 종료', '거래를 종료하시겠습니까?')
+    if res == True:
+      strategies.ttsMa.stopTrading()
+  else:
+    # saveFile()
+    exit(0)
   return
 
 ######################################
