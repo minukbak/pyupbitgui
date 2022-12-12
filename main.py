@@ -59,6 +59,7 @@ def startTrade():
     ticker = cmbTickers.get() # 프로그램 적용 코인
     timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
     mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
+    # strategy = cmbStrategies.get()
 
     strategies.ttsMa.startTrading()
     strategies.ttsMa.main(upbit, ticker, timIntv, mvAvg[2:-2].split(', '), amount, txtHead, txtBody, txtBottom)
@@ -81,7 +82,7 @@ def endTrade():
 ### Trade GUI 생성 ###g
 root = Tk()
 root.title("UpbitAuto")
-root.geometry("660x580+100+100") # 가로 * 세로 + x좌표 + y좌표
+root.geometry("640x620+100+100") # 가로 * 세로 + x좌표 + y좌표
 
 # Menu Bar
 menuBar = Menu(root)
@@ -102,53 +103,68 @@ menuBar.add_cascade(label="Help", menu=menuHelp)
 
 # Option Frame
 frameOption = LabelFrame(root, text=" Options ")
-frameOption.pack(fill="x", padx=5, pady=5)
+frameOption.pack(fill="both", padx=5, pady=5)
 
-# 콤보리스트 가운데 정렬
-# frameOption.option_add('*TCombobox*Listbox.Justify', 'center')
+# Top Area Of Option Frame
+frameOptionTop = Frame(frameOption)
+frameOptionTop.pack(fill="x", padx=5)
 
-# 1. Ticker Option (거래할 코인 설정)
+# 1-1. Strategies Option (전략 설정)
+# Strategies Label
+lblStrategies = Label(frameOptionTop, text="Strategies", width=8)
+lblStrategies.pack(side="left", padx=5)
+# Ticker Combobox
+optStrategies = ["TTS_MA"]
+
+cmbStrategies = ttk.Combobox(frameOptionTop, state="readonly", justify="center", values=optStrategies, width=12)
+cmbStrategies.current(0)
+cmbStrategies.pack(side="left", padx=5)
+
+# 1-2. Ticker Option (거래할 코인 설정)
 # Ticker Label
-lblTicker = Label(frameOption, text="Ticker", width=6)
-lblTicker.pack(side="left", padx=5, pady=5)
+lblTicker = Label(frameOptionTop, text="Ticker", width=8)
+lblTicker.pack(side="left", padx=5)
 # Ticker Combobox
 optTickers = strategies.util.getTickers()
 
-cmbTickers = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTickers, width=12)
+cmbTickers = ttk.Combobox(frameOptionTop, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
-cmbTickers.pack(side="left", padx=5, pady=5)
+cmbTickers.pack(side="left", padx=5)
 
-# 2. TimIntv Option (시간 간격, minute1 = 1분봉)
-# TimIntv Label
-lblTimIntv = Label(frameOption, text="TimIntv", width=6)
-lblTimIntv.pack(side="left", padx=5, pady=5)
-# TimIntv Combobox
-optTimIntv = ["minute1"]
-cmbTimIntv = ttk.Combobox(frameOption, state="readonly", justify="center", values=optTimIntv, width=8)
-cmbTimIntv.current(0)
-cmbTimIntv.pack(side="left", padx=5, pady=5)
+# Bottom Area Of Option Frame
+frameOptionBottom = Frame(frameOption)
+frameOptionBottom.pack(fill="x", padx=5, pady=5)
 
-# 3. MvAvg Option (기준 이동평균선)
+# 2-1. MvAvg Option (기준 이동평균선)
 # MvAvg1 Label
-lblMvAvg = Label(frameOption, text="MvAvg", width=6)
+lblMvAvg = Label(frameOptionBottom, text="MvAvg", width=8)
 lblMvAvg.pack(side="left", padx=5, pady=5)
 
 # MvAvg Combobox
 optMvAvg = ["[ 7, 30 ]"]
-cmbMvAvg = ttk.Combobox(frameOption, state="readonly", justify="center", values=optMvAvg, width=10)
+cmbMvAvg = ttk.Combobox(frameOptionBottom, state="readonly", justify="center", values=optMvAvg, width=12)
 cmbMvAvg.current(0)
 cmbMvAvg.pack(side="left", padx=5, pady=5)
 
-# 4. Amount Option
-# Amount Label
-lblAmount = Label(frameOption, text="Amount", width=6)
-lblAmount.pack(side="left", padx=5, pady=5)
+# 2-2. TimIntv Option (시간 간격, minute1 = 1분봉)
+# TimIntv Label
+lblTimIntv = Label(frameOptionBottom, text="TimIntv", width=8)
+lblTimIntv.pack(side="left", padx=5, pady=5)
+# TimIntv Combobox
+optTimIntv = ["minute1"]
+cmbTimIntv = ttk.Combobox(frameOptionBottom, state="readonly", justify="center", values=optTimIntv, width=12)
+cmbTimIntv.current(0)
+cmbTimIntv.pack(side="left", padx=5, pady=5)
 
+# 2-3. Amount Option
 # Amount TextBox
 amount = StringVar()
-tBoxAmt = ttk.Entry(frameOption, textvariable=amount, justify='right', width=12)
+tBoxAmt = ttk.Entry(frameOptionBottom, textvariable=amount, justify='right', width=14)
 tBoxAmt.insert(0, "10000")
-tBoxAmt.pack(side="left", padx=5, pady=5)
+tBoxAmt.pack(side="right", padx=5, pady=5)
+# Amount Label
+lblAmount = Label(frameOptionBottom, text="Amount", width=8)
+lblAmount.pack(side="right", padx=5, pady=5)
 
 # Status Frame
 frameStatus = LabelFrame(root, text=" Status ")
