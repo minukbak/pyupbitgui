@@ -131,6 +131,16 @@ cmbTickers = ttk.Combobox(frameOptionTop, state="readonly", justify="center", va
 cmbTickers.current(0)
 cmbTickers.pack(side="left", padx=5)
 
+# 2-3. Amount Option
+# Amount TextBox
+amount = StringVar()
+tBoxAmt = ttk.Entry(frameOptionTop, textvariable=amount, justify='right', width=14)
+tBoxAmt.insert(0, "10000")
+tBoxAmt.pack(side="right", padx=5, pady=5)
+# Amount Label
+lblAmount = Label(frameOptionTop, text="Amount", width=8)
+lblAmount.pack(side="right", padx=5, pady=5)
+
 # Bottom Area Of Option Frame
 frameOptionBottom = Frame(frameOption)
 frameOptionBottom.pack(fill="x", padx=5, pady=5)
@@ -155,16 +165,6 @@ optTimIntv = ["minute1"]
 cmbTimIntv = ttk.Combobox(frameOptionBottom, state="readonly", justify="center", values=optTimIntv, width=12)
 cmbTimIntv.current(0)
 cmbTimIntv.pack(side="left", padx=5, pady=5)
-
-# 2-3. Amount Option
-# Amount TextBox
-amount = StringVar()
-tBoxAmt = ttk.Entry(frameOptionBottom, textvariable=amount, justify='right', width=14)
-tBoxAmt.insert(0, "10000")
-tBoxAmt.pack(side="right", padx=5, pady=5)
-# Amount Label
-lblAmount = Label(frameOptionBottom, text="Amount", width=8)
-lblAmount.pack(side="right", padx=5, pady=5)
 
 # Status Frame
 frameStatus = LabelFrame(root, text=" Status ")
