@@ -124,6 +124,7 @@ menuBar = Menu(root)
 # 파일
 menuFile = Menu(menuBar, tearoff=0)
 menuFile.add_command(label="Previous Log", command=openFile)
+menuFile.add_separator()
 menuFile.add_command(label="Save Log", command=saveFile)
 menuFile.add_separator()
 menuFile.add_command(label="Exit", command=root.quit)
