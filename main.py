@@ -78,33 +78,36 @@ def endTrade():
     exit(0)
   return
 
-def goWhatIsMyIP():
- webbrowser.open_new("https://www.google.com/search?q=what+is+my+ip&oq=wh&aqs=chrome.1.69i57j69i59j35i39j0i131i433i512l2j69i60l2j69i61.2238j0j7&sourceid=chrome&ie=UTF-8")
+def getUpbitAPI():
+  webbrowser.open_new("https://upbit.com/mypage/open_api_management")
 
-def goUpbitApi():
- webbrowser.open_new("https://upbit.com/mypage/open_api_management")
+def goWhatIsMyIP():
+  webbrowser.open_new("https://www.google.com/search?q=what+is+my+ip&oq=wh&aqs=chrome.1.69i57j69i59j35i39j0i131i433i512l2j69i60l2j69i61.2238j0j7&sourceid=chrome&ie=UTF-8")
 
 def settingIP():
   dialog = Tk()
   dialog.title("Upbit Api 허용 IP 관리")
-  dialog.geometry("300x260+250+250")
+  dialog.geometry("300x300+250+250")
   
   dialogFrame = LabelFrame(dialog, bd=0)
   dialogFrame.pack(fill="both", expand=True)
 
-  dialogText1 = Label(dialogFrame, text="\nNOTICE\n\n본 프로그램을 사용하시려면\n공인 IP 주소를 Upbit에 등록하셔야 합니다.\n", font=("Arial", 10))
+  dialogText1 = Label(dialogFrame, text="\nNOTICE", font=("Arial", 11))
   dialogText1.pack()
 
-  dialogText2 = Label(dialogFrame, text="\n내 공인 IP 주소 확인하러가기", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n본 프로그램을 사용하시려면\nUpbit 공식 홈페이지에서 API Key를 발급받고,\n공인 IP 주소를 Upbit에 등록하셔야 합니다.", font=("Arial", 10))
   dialogText2.pack()
 
-  dialogBtn1 = Button(dialogFrame, text="확인하기", font=("Arial", 10), cursor="hand2", command=goWhatIsMyIP)
-  dialogBtn1.pack()
-
-  dialogText3 = Label(dialogFrame, text="\nUpbit 개발자 센터 가기", font=("Arial", 10))
+  dialogText3 = Label(dialogFrame, text="\nAPI Key 발급 및 IP 주소 등록하기", font=("Arial", 10))
   dialogText3.pack()
 
-  dialogBtn2 = Button(dialogFrame, text="등록하기", font=("Arial", 10), cursor="hand2", command=goUpbitApi)
+  dialogBtn1 = Button(dialogFrame, text="발급 및 등록", font=("Arial", 10), cursor="hand2", command=getUpbitAPI)
+  dialogBtn1.pack()
+
+  dialogText4 = Label(dialogFrame, text="\n내 공인 IP 주소 확인하기", font=("Arial", 10))
+  dialogText4.pack()
+
+  dialogBtn2 = Button(dialogFrame, text="확인하기", font=("Arial", 10), cursor="hand2", command=goWhatIsMyIP)
   dialogBtn2.pack()
 
   dialog.resizable(False, False)
