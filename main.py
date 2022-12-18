@@ -115,6 +115,34 @@ def settingIP():
 
   return
 
+def welcomeTK():
+  dialog = Tk()
+  dialog.title("WELCOME!")
+  dialog.geometry("300x280+250+250")
+  
+  dialogFrame = LabelFrame(dialog, bd=0)
+  dialogFrame.pack(fill="both", expand=True)
+
+  dialogText1 = Label(dialogFrame, text="\nWELCOME!", font=("Arial", 12))
+  dialogText1.pack()
+
+  dialogText2 = Label(dialogFrame, text="\n안녕하세요.\n만나뵙게 되어 대단히 반갑습니다.\n본 프로그램은 Upbit 자동매매 프로그램입니다.", font=("Arial", 10))
+  dialogText2.pack()
+
+  dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 선택이 되기를 응원하며\n신중하게 사용하여 꼭 부자가 되시길 기원합니다.", font=("Arial", 10))
+  dialogText2.pack()
+
+  dialogText3 = Label(dialogFrame, text="\n프로그램을 사용해주셔서 감사합니다.", font=("Arial", 10))
+  dialogText3.pack()
+
+  dialogText4 = Label(dialogFrame, text="\n\nMade by: Mubby", font=("Arial", 8))
+  dialogText4.pack()
+
+  dialog.resizable(False, False)
+  dialog.mainloop()
+
+  return
+
 ######################################
 
 ### Trade GUI 생성 ###g
@@ -135,7 +163,7 @@ menuBar.add_cascade(label="File", menu=menuFile)
 
 # 도움말
 menuHelp = Menu(menuBar, tearoff=0)
-menuHelp.add_command(label="Welcome")
+menuHelp.add_command(label="Welcome", command=welcomeTK)
 menuHelp.add_separator()
 menuHelp.add_command(label="IP Setting", command=settingIP)
 menuBar.add_cascade(label="Help", menu=menuHelp)
