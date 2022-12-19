@@ -94,25 +94,19 @@ def settingIP():
 
   dialogText1 = Label(dialogFrame, text="\nNOTICE", font=("Arial", 11))
   dialogText1.pack()
-
   dialogText2 = Label(dialogFrame, text="\n본 프로그램을 사용하시려면\nUpbit 공식 홈페이지에서 API Key를 발급받고,\n공인 IP 주소를 Upbit에 등록하셔야 합니다.\n", font=("Arial", 10))
   dialogText2.pack()
-
   dialogText3 = Label(dialogFrame, text="\nAPI Key 발급 및 IP 주소 등록하기", font=("Arial", 10))
   dialogText3.pack()
-
   dialogBtn1 = Button(dialogFrame, text="발급 및 등록", font=("Arial", 10), cursor="hand2", command=getUpbitAPI)
   dialogBtn1.pack()
-
   dialogText4 = Label(dialogFrame, text="\n내 공인 IP 주소 확인하기", font=("Arial", 10))
   dialogText4.pack()
-
   dialogBtn2 = Button(dialogFrame, text="확인하기", font=("Arial", 10), cursor="hand2", command=goWhatIsMyIP)
   dialogBtn2.pack()
 
   dialog.resizable(False, False)
   dialog.mainloop()
-
   return
 
 def welcomeTK():
@@ -125,22 +119,17 @@ def welcomeTK():
 
   dialogText1 = Label(dialogFrame, text="\nWELCOME!", font=("Arial", 12))
   dialogText1.pack()
-
   dialogText2 = Label(dialogFrame, text="\n안녕하세요.\n만나뵙게 되어 대단히 반갑습니다.\n본 프로그램은 Upbit 자동매매 프로그램입니다.", font=("Arial", 10))
   dialogText2.pack()
-
   dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 선택이 되기를 응원하며\n신중하게 사용하여 꼭 부자가 되시길 기원합니다.", font=("Arial", 10))
   dialogText2.pack()
-
   dialogText3 = Label(dialogFrame, text="\n프로그램을 사용해주셔서 감사합니다.", font=("Arial", 10))
   dialogText3.pack()
-
   dialogText4 = Label(dialogFrame, text="\n\nMade by: Mubby", font=("Arial", 8))
   dialogText4.pack()
 
   dialog.resizable(False, False)
   dialog.mainloop()
-
   return
 
 ######################################
