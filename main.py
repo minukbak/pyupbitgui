@@ -132,6 +132,18 @@ def welcomeTK():
   dialog.mainloop()
   return
 
+def manualTK():
+  dialog = Tk()
+  dialog.title("WELCOME!")
+  dialog.geometry("300x280+250+250")
+  
+  dialogFrame = LabelFrame(dialog, bd=0)
+  dialogFrame.pack(fill="both", expand=True)
+
+  dialog.resizable(False, False)
+  dialog.mainloop()
+  return
+
 ######################################
 
 ### Trade GUI 생성 ###g
@@ -144,7 +156,6 @@ menuBar = Menu(root)
 # 파일
 menuFile = Menu(menuBar, tearoff=0)
 menuFile.add_command(label="Previous Log", command=openFile)
-menuFile.add_separator()
 menuFile.add_command(label="Save Log", command=saveFile)
 menuFile.add_separator()
 menuFile.add_command(label="Exit", command=root.quit)
@@ -154,6 +165,7 @@ menuBar.add_cascade(label="File", menu=menuFile)
 menuHelp = Menu(menuBar, tearoff=0)
 menuHelp.add_command(label="Welcome", command=welcomeTK)
 menuHelp.add_separator()
+menuHelp.add_command(label="Manual", command=manualTK)
 menuHelp.add_command(label="IP Setting", command=settingIP)
 menuBar.add_cascade(label="Help", menu=menuHelp)
 
