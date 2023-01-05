@@ -4,9 +4,10 @@ import tkinter.ttk as ttk
 import tkinter.messagebox as messageBox
 import webbrowser
 
+import common
 import strategies
 
-# 직전 상태 기록 파일
+# 직전 상태 기록 파일`
 fileStatus = "txt_status.txt"
 # 직전 로그 기록 파일
 fileLog = "txt_log.txt"
@@ -49,10 +50,10 @@ def startTrade():
   if status == True:
     messageBox.showwarning('거래중 알림', '이미 거래가 진행중입니다. 거래 종료 후 다시 시도해주세요.')
   else :
-    upbit = strategies.util.accessUpbit()
+    upbit = common.utils.accessUpbit()
     amount = float(tBoxAmt.get()) # 프로그램 시작 금액
 
-    myBalance = strategies.util.getBalance(upbit, amount)
+    myBalance = common.utils.getBalance(upbit, amount)
     if myBalance != False:
       messageBox.showwarning('계좌 잔고 부족', '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
       return
@@ -193,7 +194,7 @@ cmbStrategies.pack(side="left", padx=5)
 lblTicker = Label(frameOptionTop, text="Ticker", width=8)
 lblTicker.pack(side="left", padx=5)
 # Ticker Combobox
-optTickers = strategies.util.getTickers()
+optTickers = common.utils.getTickers()
 
 cmbTickers = ttk.Combobox(frameOptionTop, state="readonly", justify="center", values=optTickers, width=12)
 cmbTickers.current(0)
