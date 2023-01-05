@@ -28,11 +28,11 @@ def condSell(ticker, timIntv, mvAvg1, mvAvg2):
   return False
 
 # 시장가 매수 시 체결 위치 / 매도 1 호가
-def getMBPrice(ticker):
+def getMkBuyPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["ask_price"]
 
 # 시장가 매도 시 체결 위치 / 매수 1 호가
-def getMSPrice(ticker):
+def getMkSellPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
 # 트레이드 루프 시작 종료 flag 관리
@@ -89,7 +89,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
         tikrBalance = upbit.get_balance(ticker)
         resp = upbit.sell_market_order(ticker, tikrBalance)
         uuid = resp['uuid']
-        sellPrice = getMSPrice(ticker)
+        sellPrice = getMkSellPrice(ticker)
         endBalance = round((tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee), 1)
         holding = False
         state = "Sold"
@@ -109,7 +109,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
       if condBuy(ticker, timIntv, mvAvg1, mvAvg2) is True:
         resp = upbit.buy_market_order(ticker, amount)
         uuid = resp['uuid']
-        buyPrice = getMBPrice(ticker)
+        buyPrice = getMkBuyPrice(ticker)
         holding = True
         state = "Bought"
 
@@ -143,7 +143,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     tikrBalance = upbit.get_balance(ticker)
     resp = upbit.sell_market_order(ticker, tikrBalance)
     uuid = resp['uuid']
-    sellPrice = getMSPrice(ticker)
+    sellPrice = getMkSellPrice(ticker)
     endBalance = round((tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee), 1)
     state = "Sold"
 
