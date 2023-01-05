@@ -75,7 +75,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   basisTime = datetime.datetime.now()
   startTime = basisTime.strftime("%H:%M:%S")
 
-  while flag == True:
+  while flag is True:
     now = datetime.datetime.now().strftime("%H:%M:%S")
 
     # 시작 동시 매수 방지: Sell condition은 MA1 <= MA2 이고 이 상태에서는 매수되지 않음
@@ -135,6 +135,24 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     txtHead.see('end')
 
     time.sleep(setSleep)
+
+  # 거래 종료 시점 보유 중일 때 전량 매도
+  if flag is False and holding is True:
+    now = datetime.datetime.now().strftime("%H:%M:%S")
+
+    tikrBalance = upbit.get_balance(ticker)
+    resp = upbit.sell_market_order(ticker, tikrBalance)
+    uuid = resp['uuid']
+    sellPrice = getMSPrice(ticker)
+    endBalance = round((tikrBalance * sellPrice) - (tikrBalance * sellPrice * fee), 1)
+    state = "Sold"
+
+    transaction = [now, state, sellPrice, endBalance, uuid]
+
+    txtBody.insert('end', f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
+    txtBody.insert('end', f"주문 번호: {transaction[4]}\n")
+    txtBody.update()
+    txtBody.see('end')
   
   endTime = datetime.datetime.now().strftime("%H:%M:%S")
   settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
