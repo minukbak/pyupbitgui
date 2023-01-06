@@ -35,6 +35,28 @@ def getMkBuyPrice(ticker):
 def getMkSellPrice(ticker):
   return pyupbit.get_orderbook(ticker)[0]["orderbook_units"][0]["bid_price"]
 
+# 거래 출력
+def printHistory(areaCase, txtArea, parts):
+  if areaCase == "head":
+    txtArea.delete('1.0', 'end')
+    txtArea.insert('end', f"\n시작시간: {parts[0]}, 코인명: {parts[1]}, 현재가: {parts[2]}, 투자금: {parts[3]}\n")
+    txtArea.insert('end', f"MA: {parts[4]}, 간격: {parts[5]}, 경과: {parts[6]}\n")
+    txtArea.update()
+    txtArea.see('end')
+  elif areaCase == "body":
+    txtArea.insert('end', f"\n거래시간: {parts[0]}, 상태: {parts[1]}, 가격: {parts[2]}, 총액: {parts[3]}\n")
+    txtArea.insert('end', f"주문 번호: {parts[4]}\n")
+    txtArea.update()
+    txtArea.see('end')
+  elif areaCase == "bottom":
+    txtArea.insert('end', f"\n종료시간: {parts[0]}, 시작금액: {parts[1]}, 종료금액: {parts[2]}\n")
+    txtArea.insert('end', f"수익금: {parts[3]}원, 수익비율: {parts[4]}\n")
+    txtArea.update()
+    txtArea.see('end')
+  else:
+      return
+  return
+
 # 트레이드 루프 시작 종료 flag 관리
 global flag
 flag = False
@@ -95,11 +117,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
         state = "Sold"
 
         transaction = [now, state, sellPrice, endBalance, uuid]
-
-        txtBody.insert('end', f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
-        txtBody.insert('end', f"주문 번호: {transaction[4]}\n")
-        txtBody.update()
-        txtBody.see('end')
+        printHistory("body", txtBody, transaction)
 
         time.sleep(setSleep)
 
@@ -114,11 +132,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
         state = "Bought"
 
         transaction = [now, state, buyPrice, endBalance, uuid]
-
-        txtBody.insert('end', f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
-        txtBody.insert('end', f"주문 번호: {transaction[4]}\n")
-        txtBody.update()
-        txtBody.see('end')
+        printHistory("body", txtBody, transaction)
 
         time.sleep(setSleep)
 
@@ -126,13 +140,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     elapsedTime = (datetime.datetime.now() - basisTime)
 
     status = [startTime, ticker, curPrice, startBalance, mvAvg, timIntv, elapsedTime]
-
-    # 상태 출력
-    txtHead.delete('1.0', 'end')
-    txtHead.insert('end', f"\n시작시간: {status[0]}, 코인명: {status[1]}, 현재가: {status[2]}, 투자금: {status[3]}\n")
-    txtHead.insert('end', f"MA: {status[4]}, 간격: {status[5]}, 경과: {status[6]}\n")
-    txtHead.update()
-    txtHead.see('end')
+    printHistory("head", txtHead, status)
 
     time.sleep(setSleep)
 
@@ -148,18 +156,11 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     state = "Sold"
 
     transaction = [now, state, sellPrice, endBalance, uuid]
-
-    txtBody.insert('end', f"\n거래시간: {transaction[0]}, 상태: {transaction[1]}, 가격: {transaction[2]}, 총액: {transaction[3]}\n")
-    txtBody.insert('end', f"주문 번호: {transaction[4]}\n")
-    txtBody.update()
-    txtBody.see('end')
+    printHistory("body", txtBody, transaction)
   
   endTime = datetime.datetime.now().strftime("%H:%M:%S")
+
   settlement = [endTime, startBalance, endBalance, round(endBalance - startBalance, 1), round(endBalance / startBalance, 3)]
-  
-  txtBottom.insert('end', f"\n종료시간: {settlement[0]}, 시작금액: {settlement[1]}, 종료금액: {settlement[2]}\n")
-  txtBottom.insert('end', f"수익금: {settlement[3]}원, 수익비율: {settlement[4]}\n")
-  txtBottom.update()
-  txtBottom.see('end')
+  printHistory("bottom", txtBottom, settlement)
 
   return
