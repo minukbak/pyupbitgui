@@ -1,4 +1,5 @@
 import os
+import datetime
 from tkinter import *
 import tkinter.ttk as ttk
 import tkinter.messagebox as messageBox
@@ -7,40 +8,33 @@ import webbrowser
 import common
 import strategies
 
-# 직전 상태 기록 파일`
-fileStatus = "txt_status.txt"
-# 직전 로그 기록 파일
-fileLog = "txt_log.txt"
-# 직전 결과 기록 파일
-fileResult = "txt_result.txt"
-
 def openFile():
-  # status.txt 열기
-  if os.path.isfile(fileStatus): # 파일 있으면 True, 없으면 False
-    with open(fileStatus, "r", encoding="utf8") as file:
-      txtHead.delete("1.0", END) # 텍스트 위젯 본문 삭제
-      txtHead.insert(END, file.read()) # 파일 내용을 본문에 입력
-  # log.txt 열기
-  if os.path.isfile(fileLog):
-    with open(fileLog, "r", encoding="utf8") as file:
+  historyFileName = []
+  historyFileName.append("txnHistories\\")
+  historyFileName.append("history")
+  historyFileName.append(".txt")
+  historyFileName = ''.join(historyFileName)
+  
+  tarket_path = os.path.relpath(historyFileName, os.path.dirname(__file__))
+
+  with open(tarket_path, "r", encoding="utf8") as file:
       txtBody.delete("1.0", END)
       txtBody.insert(END, file.read())
-  # result.txt 열기
-  if os.path.isfile(fileResult):
-    with open(fileResult, "r", encoding="utf8") as file:
-      txtBottom.delete("1.0", END)
-      txtBottom.insert(END, file.read())
   return
 
 def saveFile():
-  # status.txt 저장
-  with open(fileStatus, "w", encoding="utf8") as file:
-    file.write(txtHead.get("1.0", END)) # 모든 내용을 저장
-  # log.txt 저장
-  with open(fileLog, "w", encoding="utf8") as file:
+  historyFileName = []
+  historyFileName.append("txnHistories\\")
+  # historyFileName.append(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
+  historyFileName.append("history")
+  historyFileName.append(".txt")
+  historyFileName = ''.join(historyFileName)
+
+  tarketPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
+
+  with open(tarketPath, "w", encoding="utf8") as file:
+    file.write(txtHead.get("1.0", END))
     file.write(txtBody.get("1.0", END))
-  # result.txt 저장
-  with open(fileResult, "w", encoding="utf8") as file:
     file.write(txtBottom.get("1.0", END))
   return
 

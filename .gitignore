@@ -3,7 +3,5 @@ config.json.example
 tempCodeRunnerFile.py
 __pycache__
 
-# 로그 및 결과 파일 업로드 제외
-txt_log.txt
-txt_result.txt
-txt_status.txt
+# 로그 파일 업로드 제외
+txnHistories/*.txt
