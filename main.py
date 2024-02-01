@@ -8,21 +8,21 @@ import webbrowser
 import common
 import strategies
 
-def openFile() :
+def openFile():
   historyFileName = []
   historyFileName.append("txnHistories\\")
   historyFileName.append("history")
   historyFileName.append(".txt")
   historyFileName = ''.join(historyFileName)
   
-  tarket_path = os.path.relpath(historyFileName, os.path.dirname(__file__))
+  targetPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
 
-  with open(tarket_path, "r", encoding="utf8") as file :
+  with open(targetPath, "r", encoding="utf8") as file :
       txtBody.delete("1.0", END)
       txtBody.insert(END, file.read())
   return
 
-def saveFile() :
+def saveFile():
   historyFileName = []
   historyFileName.append("txnHistories\\")
   # historyFileName.append(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
@@ -30,9 +30,9 @@ def saveFile() :
   historyFileName.append(".txt")
   historyFileName = ''.join(historyFileName)
 
-  tarketPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
+  targetPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
 
-  with open(tarketPath, "w", encoding="utf8") as file :
+  with open(targetPath, "w", encoding="utf8") as file :
     file.write(txtHead.get("1.0", END))
     file.write(txtBody.get("1.0", END))
     file.write(txtBottom.get("1.0", END))
@@ -74,12 +74,12 @@ def startTrade():
 # 거래 종료(버튼)
 def endTrade():
   status = strategies.ttsMa.checkFlag()
-  if status == True:
+  if status == True :
     res = messageBox.askokcancel('거래 종료', '거래를 종료하시겠습니까?')
-    if res == True:
+    if res == True :
       strategies.ttsMa.stopTrading()
   else:
-    # saveFile()
+    saveFile()
     exit(0)
   return
 
@@ -126,9 +126,9 @@ def welcomeTK():
   dialogText1.pack()
   dialogText2 = Label(dialogFrame, text="\n안녕하세요.\n만나뵙게 되어 대단히 반갑습니다.\n본 프로그램은 Upbit 자동매매 프로그램입니다.", font=("Arial", 10))
   dialogText2.pack()
-  dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 선택이 되기를 응원하며\n신중하게 사용하여 꼭 부자가 되시길 기원합니다.", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 결과를 낳기를 기원하며,\n신중하게 사용하시여 주시길 바랍니다.", font=("Arial", 10))
   dialogText2.pack()
-  dialogText3 = Label(dialogFrame, text="\n프로그램을 사용해주셔서 감사합니다.", font=("Arial", 10))
+  dialogText3 = Label(dialogFrame, text="\n프로그램을 사용해주셔서 대단히 감사합니다.", font=("Arial", 10))
   dialogText3.pack()
   dialogText4 = Label(dialogFrame, text="\n\nMade by: Mubby", font=("Arial", 8))
   dialogText4.pack()
