@@ -8,7 +8,7 @@ import webbrowser
 import common
 import strategies
 
-def openFile():
+def openFile() :
   historyFileName = []
   historyFileName.append("txnHistories\\")
   historyFileName.append("history")
@@ -17,12 +17,12 @@ def openFile():
   
   tarket_path = os.path.relpath(historyFileName, os.path.dirname(__file__))
 
-  with open(tarket_path, "r", encoding="utf8") as file:
+  with open(tarket_path, "r", encoding="utf8") as file :
       txtBody.delete("1.0", END)
       txtBody.insert(END, file.read())
   return
 
-def saveFile():
+def saveFile() :
   historyFileName = []
   historyFileName.append("txnHistories\\")
   # historyFileName.append(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
@@ -32,7 +32,7 @@ def saveFile():
 
   tarketPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
 
-  with open(tarketPath, "w", encoding="utf8") as file:
+  with open(tarketPath, "w", encoding="utf8") as file :
     file.write(txtHead.get("1.0", END))
     file.write(txtBody.get("1.0", END))
     file.write(txtBottom.get("1.0", END))
@@ -41,18 +41,28 @@ def saveFile():
 # 거래 시작(버튼)
 def startTrade():
   status = strategies.ttsMa.checkFlag()
-  if status == True:
+  if status == True :
     messageBox.showwarning('거래중 알림', '이미 거래가 진행중입니다. 거래 종료 후 다시 시도해주세요.')
   else :
     upbit = common.utils.accessUpbit()
     amount = float(tBoxAmt.get()) # 프로그램 시작 금액
 
+    # 계좌 잔고 부족 처리
     myBalance = common.utils.getBalance(upbit, amount)
-    if myBalance != False:
-      messageBox.showwarning('계좌 잔고 부족', '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
+    if myBalance != False :
+      messageBox.showwarning('계좌 잔고 부족 알림',
+                             '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
       return
 
     ticker = cmbTickers.get() # 프로그램 적용 코인
+    tikrBalance = upbit.get_balance(ticker)
+
+    # 이미 보유하고 있는 코인에 대한 프로그램 사용 제한 처리
+    if tikrBalance > 0 :
+      messageBox.showwarning('기 보유 코인 사용 제한 알림',
+                             '이미 보유한 코인에 대해서는 프로그램 사용이 제한됩니다.\n코인 코드 : ' + ticker + ', 기 보유 수량 : ' + str(tikrBalance) + '개')
+      return
+
     timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
     mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
     # strategy = cmbStrategies.get()
