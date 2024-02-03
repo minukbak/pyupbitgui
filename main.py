@@ -99,7 +99,7 @@ def settingIP():
 
   dialogText1 = Label(dialogFrame, text="\nNOTICE", font=("Arial", 11))
   dialogText1.pack()
-  dialogText2 = Label(dialogFrame, text="\n본 프로그램을 사용하시려면\nUpbit 공식 홈페이지에서 API Key를 발급받고,\n공인 IP 주소를 Upbit에 등록하셔야 합니다.\n", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n본 프로그램을 사용하시려면\nUpbit 공식 홈페이지에서 API Key를 발급 받고,\n공인 IP 주소를 Upbit에 등록하셔야 합니다.\n", font=("Arial", 10))
   dialogText2.pack()
   dialogText3 = Label(dialogFrame, text="\nAPI Key 발급 및 IP 주소 등록하기", font=("Arial", 10))
   dialogText3.pack()
@@ -137,13 +137,44 @@ def welcomeTK():
   dialog.mainloop()
   return
 
+# 메뉴얼 임시 등록(수정 필요)
 def manualTK():
   dialog = Tk()
-  dialog.title("WELCOME!")
-  dialog.geometry("300x280+250+250")
+  dialog.title("MANUAL")
+  dialog.geometry("500x330+250+250")
   
   dialogFrame = LabelFrame(dialog, bd=0)
   dialogFrame.pack(fill="both", expand=True)
+
+  dialogText1 = Label(dialogFrame, text="\nMANUAL", font=("Arial", 12))
+  dialogText1.pack()
+
+  dialogText2 = Label(dialogFrame, text="\n본 프로그램은 종료 시 자동 매매 중 구매 된 코인을 전량 매도하고 있습니다.", font=("Arial", 10))
+  dialogText2.pack()
+
+  dialogText3 = Label(dialogFrame, text="\n준비된 프로세스를 모두 이용하기 위해 꼭 프로그램 하단의 \'END\' 버튼을", font=("Arial", 10))
+  dialogText3.pack()
+
+  dialogText4 = Label(dialogFrame, text="사용하여 자동매매 중지 및 프로그램 종료를 해주시길 바랍니다.", font=("Arial", 10))
+  dialogText4.pack()
+
+  dialogText5 = Label(dialogFrame, text="\n용어 정리", font=("Arial", 12))
+  dialogText5.pack()
+
+  dialogText6 = Label(dialogFrame, text="\nStrategies = 사용 가능한 자동 매매 전략.", font=("Arial", 10))
+  dialogText6.pack()
+
+  dialogText7 = Label(dialogFrame, text="Ticker = 자동 매매에 사용할 코인 코드", font=("Arial", 10))
+  dialogText7.pack()
+
+  dialogText8 = Label(dialogFrame, text="Amount = 자동 매매에 투입할 금액 (최소 10,000원)", font=("Arial", 10))
+  dialogText8.pack()
+
+  dialogText9 = Label(dialogFrame, text="MvAvg = TTS_MA Strategies 에서 사용하는 이동평균선 기준", font=("Arial", 10))
+  dialogText9.pack()
+
+  dialogText10 = Label(dialogFrame, text="TimeIntv = TTS_MA Strategies 에서 사용하는 시간 단위 기준", font=("Arial", 10))
+  dialogText10.pack()
 
   dialog.resizable(False, False)
   dialog.mainloop()
