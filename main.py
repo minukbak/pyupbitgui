@@ -47,6 +47,14 @@ def startTrade():
     upbit = common.utils.accessUpbit()
     amount = float(tBoxAmt.get()) # 프로그램 시작 금액
 
+    if amount < 10000 :
+      messageBox.showwarning('프로그램 시작 최소 금액 부족 알림',
+                             '프로그램 시작 최소 금액 은 10,000원 입니다.\n현재 입력 금액 : ' + '{:,}'.format(round(amount)) + '원')
+      tBoxAmt.delete('0', END)
+      tBoxAmt.insert(END, '10000')
+      amount = 0
+      return
+
     # 계좌 잔고 부족 처리
     myBalance = common.utils.getBalance(upbit, amount)
     if myBalance != False :
