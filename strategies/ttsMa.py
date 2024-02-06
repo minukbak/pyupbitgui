@@ -15,7 +15,7 @@ def calMvAvg(ticker, timIntv, cnt):
 def condBuy(ticker, timIntv, mvAvg1, mvAvg2):
   calMvAvg1 = calMvAvg(ticker, timIntv, mvAvg1)
   calMvAvg2 = calMvAvg(ticker, timIntv, mvAvg2)
-  if calMvAvg1 >= calMvAvg2:
+  if calMvAvg1 >= calMvAvg2 :
     return True
   return False
 
@@ -23,7 +23,7 @@ def condBuy(ticker, timIntv, mvAvg1, mvAvg2):
 def condSell(ticker, timIntv, mvAvg1, mvAvg2):
   calMvAvg1 = calMvAvg(ticker, timIntv, mvAvg1)
   calMvAvg2 = calMvAvg(ticker, timIntv, mvAvg2)
-  if calMvAvg1 <= calMvAvg2:
+  if calMvAvg1 <= calMvAvg2 :
     return True
   return False
 
@@ -37,23 +37,23 @@ def getMkSellPrice(ticker):
 
 # 거래 출력
 def printHistory(areaCase, txtArea, parts):
-  if areaCase == "head":
+  if areaCase == "head" :
     txtArea.delete('1.0', 'end')
-    txtArea.insert('end', f"\n시작시간: {parts[0]}, 코인명: {parts[1]}, 현재가: {parts[2]}, 투자금: {parts[3]}\n")
+    txtArea.insert('end', f"\n시작 시간: {parts[0]}, 코인 코드: {parts[1]}, 현재가: {parts[2]}, 투자금: {parts[3]}\n")
     txtArea.insert('end', f"MA: {parts[4]}, 간격: {parts[5]}, 경과: {parts[6]}\n")
     txtArea.update()
     txtArea.see('end')
-  elif areaCase == "body":
-    txtArea.insert('end', f"\n거래시간: {parts[0]}, 상태: {parts[1]}, 가격: {parts[2]}, 총액: {parts[3]}\n")
+  elif areaCase == "body" :
+    txtArea.insert('end', f"\n거래 시간: {parts[0]}, 상태: {parts[1]}, 가격: {parts[2]}, 총액: {parts[3]}\n")
     txtArea.insert('end', f"주문 번호: {parts[4]}\n")
     txtArea.update()
     txtArea.see('end')
-  elif areaCase == "bottom":
-    txtArea.insert('end', f"\n종료시간: {parts[0]}, 시작금액: {parts[1]}, 종료금액: {parts[2]}\n")
-    txtArea.insert('end', f"수익금: {parts[3]}원, 수익비율: {parts[4]}\n")
+  elif areaCase == "bottom" :
+    txtArea.insert('end', f"\n종료 시간: {parts[0]}, 시작 금액: {parts[1]}, 종료 금액: {parts[2]}\n")
+    txtArea.insert('end', f"수익금: {parts[3]}원, 수익 비율: {parts[4]}\n")
     txtArea.update()
     txtArea.see('end')
-  else:
+  else :
       return
   return
 
@@ -97,17 +97,17 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
   basisTime = datetime.datetime.now()
   startTime = basisTime.strftime("%H:%M:%S")
 
-  while flag is True:
+  while flag is True :
     now = datetime.datetime.now().strftime("%H:%M:%S")
 
     # 시작 동시 매수 방지: Sell condition은 MA1 <= MA2 이고 이 상태에서는 매수되지 않음
-    if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
+    if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True :
       operMode = True
 
     # 매도
     # 해당 코인을 가지고 있고, 매도 조건이 True일 때
-    if holding is True and operMode is True:
-      if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True:
+    if holding is True and operMode is True :
+      if condSell(ticker, timIntv, mvAvg1, mvAvg2) is True :
         tikrBalance = upbit.get_balance(ticker)
         resp = upbit.sell_market_order(ticker, tikrBalance)
         uuid = resp['uuid']
@@ -123,8 +123,8 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
 
     # 매수
     # 해당 코인을 가지고 있지 않고, 매수 조건이 True일 때
-    if holding is False and operMode is True:
-      if condBuy(ticker, timIntv, mvAvg1, mvAvg2) is True:
+    if holding is False and operMode is True :
+      if condBuy(ticker, timIntv, mvAvg1, mvAvg2) is True :
         resp = upbit.buy_market_order(ticker, amount)
         uuid = resp['uuid']
         buyPrice = getMkBuyPrice(ticker)
@@ -145,7 +145,7 @@ def main(upbit, ticker, timIntv, mvAvg, amount, txtHead, txtBody, txtBottom):
     time.sleep(setSleep)
 
   # 거래 종료 시점 보유 중일 때 전량 매도
-  if flag is False and holding is True:
+  if flag is False and holding is True :
     now = datetime.datetime.now().strftime("%H:%M:%S")
 
     tikrBalance = upbit.get_balance(ticker)
