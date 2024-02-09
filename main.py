@@ -18,8 +18,36 @@ def openFile():
   targetPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
 
   with open(targetPath, "r", encoding="utf8") as file :
+      txtHead.delete("1.0", END)
+      lines = ""
+      while True :
+        line = file.readline()
+        if not line : break
+
+        if "Status" in line :
+          continue
+
+        if "Log" in line :
+          txtHead.insert(END, lines.strip() + "\n")
+          break
+        lines += line
+
       txtBody.delete("1.0", END)
-      txtBody.insert(END, file.read())
+      lines = ""
+      while True :
+        line = file.readline()
+        if not line : break
+
+        if "Log" in line :
+          continue
+
+        if "Result" in line :
+          txtBody.insert(END, lines.strip() + "\n")
+          break
+        lines += line
+
+      txtBottom.delete("1.0", END)
+      txtBottom.insert(END, file.read().strip() + "\n")
   return
 
 def saveFile():
@@ -33,8 +61,11 @@ def saveFile():
   targetPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
 
   with open(targetPath, "w", encoding="utf8") as file :
+    file.write("#Status\n")
     file.write(txtHead.get("1.0", END))
+    file.write("#Log\n")
     file.write(txtBody.get("1.0", END))
+    file.write("#Result\n")
     file.write(txtBottom.get("1.0", END))
   return
 
@@ -82,11 +113,11 @@ def startTrade():
 # 거래 종료(버튼)
 def endTrade():
   status = strategies.ttsMa.checkFlag()
-  if status == True :
+  if status == True : # 프로그램이 가동 중일 경우
     res = messageBox.askokcancel('거래 종료', '거래를 종료하시겠습니까?')
     if res == True :
       strategies.ttsMa.stopTrading()
-  else:
+  else :
     saveFile()
     exit(0)
   return

@@ -39,18 +39,18 @@ def getMkSellPrice(ticker):
 def printHistory(areaCase, txtArea, parts):
   if areaCase == "head" :
     txtArea.delete('1.0', 'end')
-    txtArea.insert('end', f"\n시작 시간: {parts[0]}, 코인 코드: {parts[1]}, 현재가: {parts[2]}, 투자금: {parts[3]}\n")
-    txtArea.insert('end', f"MA: {parts[4]}, 간격: {parts[5]}, 경과: {parts[6]}\n")
+    txtArea.insert('end', f"- 시작 시간: {parts[0]}, 코인 코드: {parts[1]}, 현재가: {parts[2]}, 투자금: {parts[3]}\n")
+    txtArea.insert('end', f"\tMA: {parts[4]}, 간격: {parts[5]}, 경과: {parts[6]}\n")
     txtArea.update()
     txtArea.see('end')
   elif areaCase == "body" :
-    txtArea.insert('end', f"\n거래 시간: {parts[0]}, 상태: {parts[1]}, 가격: {parts[2]}, 총액: {parts[3]}\n")
-    txtArea.insert('end', f"주문 번호: {parts[4]}\n")
+    txtArea.insert('end', f"- 거래 시간: {parts[0]}, 상태: {parts[1]}, 가격: {parts[2]}, 총액: {parts[3]}\n")
+    txtArea.insert('end', f"\t주문 번호: {parts[4]}\n")
     txtArea.update()
     txtArea.see('end')
   elif areaCase == "bottom" :
-    txtArea.insert('end', f"\n종료 시간: {parts[0]}, 시작 금액: {parts[1]}, 종료 금액: {parts[2]}\n")
-    txtArea.insert('end', f"수익금: {parts[3]}원, 수익 비율: {parts[4]}\n")
+    txtArea.insert('end', f"- 종료 시간: {parts[0]}, 시작 금액: {parts[1]}, 종료 금액: {parts[2]}\n")
+    txtArea.insert('end', f"\t수익금: {parts[3]}원, 수익 비율: {parts[4]}\n")
     txtArea.update()
     txtArea.see('end')
   else :
