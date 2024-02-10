@@ -3,21 +3,17 @@ import datetime
 from tkinter import *
 import tkinter.ttk as ttk
 import tkinter.messagebox as messageBox
+import tkinter.filedialog as filedialog
 import webbrowser
 
 import common
 import strategies
 
 def openFile():
-  historyFileName = []
-  historyFileName.append("txnHistories\\")
-  historyFileName.append("history")
-  historyFileName.append(".txt")
-  historyFileName = ''.join(historyFileName)
-  
-  targetPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
+  logsDirPath = os.path.dirname(os.path.abspath(__file__)) + "\\txnLogs\\"
+  logFile = filedialog.askopenfilename(initialdir=logsDirPath, filetypes=(("Text files", "*.txt"),))
 
-  with open(targetPath, "r", encoding="utf8") as file :
+  with open(logFile, "r", encoding="utf8") as file :
       txtHead.delete("1.0", END)
       lines = ""
       while True :
@@ -51,16 +47,12 @@ def openFile():
   return
 
 def saveFile():
-  historyFileName = []
-  historyFileName.append("txnHistories\\")
-  # historyFileName.append(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
-  historyFileName.append("history")
-  historyFileName.append(".txt")
-  historyFileName = ''.join(historyFileName)
+  logsDirPath = os.path.dirname(os.path.abspath(__file__)) + "\\txnLogs\\"
+  logFileName = "log_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".txt"
 
-  targetPath = os.path.relpath(historyFileName, os.path.dirname(__file__))
+  logFile = logsDirPath + logFileName
 
-  with open(targetPath, "w", encoding="utf8") as file :
+  with open(logFile, "w", encoding="utf8") as file :
     file.write("#Status\n")
     file.write(txtHead.get("1.0", END))
     file.write("#Log\n")

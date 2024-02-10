@@ -4,4 +4,4 @@ tempCodeRunnerFile.py
 __pycache__
 
 # 로그 파일 업로드 제외
-txnHistories/*.txt
+txnLogs/*.txt
