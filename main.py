@@ -20,9 +20,6 @@ def openFile():
         line = file.readline()
         if not line : break
 
-        if "Status" in line :
-          continue
-
         if "Log" in line :
           txtHead.insert(END, lines.strip() + "\n")
           break
@@ -33,9 +30,6 @@ def openFile():
       while True :
         line = file.readline()
         if not line : break
-
-        if "Log" in line :
-          continue
 
         if "Result" in line :
           txtBody.insert(END, lines.strip() + "\n")
