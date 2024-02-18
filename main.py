@@ -105,7 +105,20 @@ def endTrade():
       strategies.ttsMa.stopTrading()
   else :
     saveFile()
-    exit(0)
+    root.destroy()
+  return
+
+def exitButton():
+  status = strategies.ttsMa.checkFlag()
+  if status == True : # 프로그램이 가동 중일 경우
+    res = messageBox.askokcancel('거래 종료', '거래를 종료하시겠습니까?')
+    if res == True :
+      strategies.ttsMa.stopTrading()
+      saveFile()
+      root.destroy()
+  else :
+    saveFile()
+    root.destroy()
   return
 
 def getUpbitAPI():
@@ -211,6 +224,7 @@ def manualTK():
 root = Tk()
 root.title("UpbitAuto")
 root.geometry("640x620+100+100") # 가로 * 세로 + x좌표 + y좌표
+root.protocol("WM_DELETE_WINDOW", exitButton)
 
 # Menu Bar
 menuBar = Menu(root)
