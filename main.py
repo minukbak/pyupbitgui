@@ -41,18 +41,20 @@ def openFile():
   return
 
 def saveFile():
-  logsDirPath = os.path.dirname(os.path.abspath(__file__)) + "\\txnLogs\\"
-  logFileName = "log_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".txt"
+  # 거래 이력이 있을 경우에만 파일 저장
+  if txtHead.get("1.0", END).strip() + txtBottom.get("1.0", END).strip():
+    logsDirPath = os.path.dirname(os.path.abspath(__file__)) + "\\txnLogs\\"
+    logFileName = "log_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".txt"
 
-  logFile = logsDirPath + logFileName
+    logFile = logsDirPath + logFileName
 
-  with open(logFile, "w", encoding="utf8") as file :
-    file.write("#Status\n")
-    file.write(txtHead.get("1.0", END))
-    file.write("#Log\n")
-    file.write(txtBody.get("1.0", END))
-    file.write("#Result\n")
-    file.write(txtBottom.get("1.0", END))
+    with open(logFile, "w", encoding="utf8") as file :
+      file.write("#Status\n")
+      file.write(txtHead.get("1.0", END))
+      file.write("#Log\n")
+      file.write(txtBody.get("1.0", END))
+      file.write("#Result\n")
+      file.write(txtBottom.get("1.0", END))
   return
 
 # 거래 시작(버튼)
