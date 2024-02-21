@@ -130,14 +130,14 @@ def goWhatIsMyIP():
 def settingIP():
   dialog = Tk()
   dialog.title("Upbit Api 허용 IP 관리")
-  dialog.geometry("300x280+250+250")
+  dialog.geometry("300x240+250+200")
   
   dialogFrame = LabelFrame(dialog, bd=0)
   dialogFrame.pack(fill="both", expand=True)
 
-  dialogText1 = Label(dialogFrame, text="\nNOTICE", font=("Arial", 11))
+  dialogText1 = Label(dialogFrame, text="\nIP Setting", font=("Arial", 12))
   dialogText1.pack()
-  dialogText2 = Label(dialogFrame, text="\n본 프로그램을 사용하시려면\nUpbit 공식 홈페이지에서 API Key를 발급 받고,\n공인 IP 주소를 Upbit에 등록하셔야 합니다.\n", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n아래 버튼을 통해 해당 사이트로 이동", font=("Arial", 11))
   dialogText2.pack()
   dialogText3 = Label(dialogFrame, text="\nAPI Key 발급 및 IP 주소 등록하기", font=("Arial", 10))
   dialogText3.pack()
@@ -154,15 +154,15 @@ def settingIP():
 
 def welcomeTK():
   dialog = Tk()
-  dialog.title("WELCOME!")
-  dialog.geometry("300x280+250+250")
+  dialog.title("NOTICE")
+  dialog.geometry("300x260+250+200")
   
   dialogFrame = LabelFrame(dialog, bd=0)
   dialogFrame.pack(fill="both", expand=True)
 
   dialogText1 = Label(dialogFrame, text="\nWELCOME!", font=("Arial", 12))
   dialogText1.pack()
-  dialogText2 = Label(dialogFrame, text="\n안녕하세요.\n만나뵙게 되어 대단히 반갑습니다.\n본 프로그램은 Upbit 자동매매 프로그램입니다.", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n안녕하세요.\n본 프로그램은 Upbit 자동매매 프로그램입니다.", font=("Arial", 10))
   dialogText2.pack()
   dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 결과를 낳기를 기원하며,\n신중하게 사용하시여 주시길 바랍니다.", font=("Arial", 10))
   dialogText2.pack()
@@ -175,11 +175,10 @@ def welcomeTK():
   dialog.mainloop()
   return
 
-# 메뉴얼 임시 등록(수정 필요)
 def manualTK():
   dialog = Tk()
   dialog.title("MANUAL")
-  dialog.geometry("500x330+250+250")
+  dialog.geometry("400x560+250+150")
   
   dialogFrame = LabelFrame(dialog, bd=0)
   dialogFrame.pack(fill="both", expand=True)
@@ -187,32 +186,38 @@ def manualTK():
   dialogText1 = Label(dialogFrame, text="\nMANUAL", font=("Arial", 12))
   dialogText1.pack()
 
-  dialogText2 = Label(dialogFrame, text="\n본 프로그램은 종료 시 자동 매매 중 구매 된 코인을 전량 매도하고 있습니다.", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n1. API Key 발급 및 IP 주소 등록", font=("Arial", 11))
   dialogText2.pack()
 
-  dialogText3 = Label(dialogFrame, text="\n준비된 프로세스를 모두 이용하기 위해 꼭 프로그램 하단의 \'END\' 버튼을", font=("Arial", 10))
+  dialogText3 = Label(dialogFrame, text="\nUPBIT 자동매매 프로그램을 사용하시려면\n공식 홈페이지를 통해 API Key를 발급 받고,\n공인 IP 주소를 Upbit에 등록하셔야 합니다.\n(프로그램 상단 Help/IP Setting 메뉴를 참고하세요.)", font=("Arial", 10))
   dialogText3.pack()
 
-  dialogText4 = Label(dialogFrame, text="사용하여 자동매매 중지 및 프로그램 종료를 해주시길 바랍니다.", font=("Arial", 10))
+  dialogText4 = Label(dialogFrame, text="\n- Key 예시(총 30자리의 Access Key와 Secret Key 발급)\nAccess key: 2tcRERLAXffuW5ohipVxYEDvgWw36uxxxxxxxxxx\nSecret key: u0taIcQCdczTACmnaeTFIdK2NpORtZxxxxxxxxxx\n(발급 받은 Key 개인 메모장에 보관할 것)", font=("Arial", 10))
   dialogText4.pack()
 
-  dialogText5 = Label(dialogFrame, text="\n용어 정리", font=("Arial", 12))
+  dialogText5 = Label(dialogFrame, text="\n2. 메인 폴더에 'config.json' 파일 생성 후 Key 입력", font=("Arial", 11))
   dialogText5.pack()
 
-  dialogText6 = Label(dialogFrame, text="\nStrategies = 사용 가능한 자동 매매 전략.", font=("Arial", 10))
+  dialogText6 = Label(dialogFrame, text="\n'help_config.txt' 내용을 위의 json 파일에 복사 및 붙여 넣기\n('config.json' 파일은 외부에 공유 되지 않습니다.)", font=("Arial", 10))
   dialogText6.pack()
 
-  dialogText7 = Label(dialogFrame, text="Ticker = 자동 매매에 사용할 코인 코드", font=("Arial", 10))
+  dialogText7 = Label(dialogFrame, text="\n용어 정리", font=("Arial", 12))
   dialogText7.pack()
 
-  dialogText8 = Label(dialogFrame, text="Amount = 자동 매매에 투입할 금액 (최소 10,000원)", font=("Arial", 10))
+  dialogText8 = Label(dialogFrame, text="\nStrategies = 사용 가능한 자동 매매 전략.", font=("Arial", 10))
   dialogText8.pack()
 
-  dialogText9 = Label(dialogFrame, text="MvAvg = TTS_MA Strategies 에서 사용하는 이동평균선 기준", font=("Arial", 10))
+  dialogText9 = Label(dialogFrame, text="Ticker = 자동 매매에 사용할 코인 코드", font=("Arial", 10))
   dialogText9.pack()
 
-  dialogText10 = Label(dialogFrame, text="TimeIntv = TTS_MA Strategies 에서 사용하는 시간 단위 기준", font=("Arial", 10))
+  dialogText10 = Label(dialogFrame, text="Amount = 자동 매매에 투입할 금액 (최소 10,000원)", font=("Arial", 10))
   dialogText10.pack()
+
+  dialogText11 = Label(dialogFrame, text="MvAvg = TTS_MA Strategies 에서 사용하는 이동평균선 기준", font=("Arial", 10))
+  dialogText11.pack()
+
+  dialogText12 = Label(dialogFrame, text="TimeIntv = TTS_MA Strategies 에서 사용하는 시간 단위 기준", font=("Arial", 10))
+  dialogText12.pack()
 
   dialog.resizable(False, False)
   dialog.mainloop()
