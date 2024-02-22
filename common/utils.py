@@ -13,8 +13,11 @@ def accessUpbit():
 def getTickers():
   return pyupbit.get_tickers(fiat="KRW")
 
-def getBalance(upbit, amount):
-  fee = 0.0005 # 수수료
+def getBalance(upbit):
   balance = upbit.get_balance("KRW")
 
-  return balance if (amount * (1.0 - fee)) > balance else False
+  # upbit 연결 실패 시(balance 조회가 되지 않음)
+  if balance is None :
+    balance = -1.0
+
+  return balance

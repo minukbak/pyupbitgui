@@ -75,8 +75,15 @@ def startTrade():
       return
 
     # 계좌 잔고 부족 처리
-    myBalance = common.utils.getBalance(upbit, amount)
-    if myBalance != False :
+    myBalance = common.utils.getBalance(upbit)
+
+    if myBalance < 0 :
+      messageBox.showwarning('프로그램 시작 에러',
+                             'API Key 및 IP 주소가 제대로 등록되어 있는지 확인해 주세요.')
+      return
+
+    # fee = 0.05%
+    if (amount * (1.0 - 0.05)) > myBalance :
       messageBox.showwarning('계좌 잔고 부족 알림',
                              '계좌 잔고가 부족합니다.\n최대 금액 : ' + '{:,}'.format(round(myBalance)) + '원')
       return
