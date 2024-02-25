@@ -308,7 +308,7 @@ lblMvAvg = Label(frameOptionBottom, text="MvAvg", width=8)
 lblMvAvg.pack(side="left", padx=5, pady=5)
 
 # MvAvg Combobox
-optMvAvg = ["[ 7, 30 ]"]
+optMvAvg = ["[ 3, 7 ]", "[ 7, 30 ]", "[ 3, 30 ]"]
 cmbMvAvg = ttk.Combobox(frameOptionBottom, state="readonly", justify="center", values=optMvAvg, width=12)
 cmbMvAvg.current(0)
 cmbMvAvg.pack(side="left", padx=5, pady=5)
