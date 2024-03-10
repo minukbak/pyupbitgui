@@ -173,7 +173,7 @@ def welcomeTK():
   dialogText1.pack()
   dialogText2 = Label(dialogFrame, text="\n안녕하세요.\n본 프로그램은 Upbit 자동매매 프로그램입니다.", font=("Arial", 10))
   dialogText2.pack()
-  dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 결과를 낳기를 기원하며,\n신중하게 사용하시여 주시길 바랍니다.", font=("Arial", 10))
+  dialogText2 = Label(dialogFrame, text="\n모든 선택이 성공적인 결과로 이어지길 기원하며,\n신중하게 사용하시여 주시길 바랍니다.", font=("Arial", 10))
   dialogText2.pack()
   dialogText3 = Label(dialogFrame, text="\n프로그램을 사용해주셔서 대단히 감사합니다.", font=("Arial", 10))
   dialogText3.pack()
