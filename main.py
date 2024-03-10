@@ -97,7 +97,7 @@ def startTrade():
                              '이미 보유한 코인에 대해서는 프로그램 사용이 제한됩니다.\n코인 코드 : ' + ticker + ', 기 보유 수량 : ' + str(tikrBalance) + '개')
       return
 
-    timIntv = cmbTimIntv.get() # 봉 단위, minute1 = 1분봉
+    timIntv = cmbTimIntv.get() # 봉 단위, ex) minute1 = 1분봉
     mvAvg = cmbMvAvg.get() # 이동평균선 적용 값
     # strategy = cmbStrategies.get()
 
@@ -308,17 +308,20 @@ lblMvAvg = Label(frameOptionBottom, text="MvAvg", width=8)
 lblMvAvg.pack(side="left", padx=5, pady=5)
 
 # MvAvg Combobox
-optMvAvg = ["[ 3, 7 ]", "[ 7, 30 ]", "[ 3, 30 ]"]
+optMvAvg = ["[ 3, 7 ]", "[ 3, 10 ]", "[ 3, 30 ]", "[ 3, 60 ]" \
+            , "[ 7, 10 ]", "[ 7, 30 ]", "[ 7, 60 ]" \
+            , "[ 10, 30 ]", "[ 10, 60 ]" \
+            , "[ 30, 60 ]"]
 cmbMvAvg = ttk.Combobox(frameOptionBottom, state="readonly", justify="center", values=optMvAvg, width=12)
 cmbMvAvg.current(0)
 cmbMvAvg.pack(side="left", padx=5, pady=5)
 
-# 2-2. TimIntv Option (시간 간격, minute1 = 1분봉)
+# 2-2. TimIntv Option (시간 간격, ex) minute1 = 1분봉)
 # TimIntv Label
 lblTimIntv = Label(frameOptionBottom, text="TimIntv", width=8)
 lblTimIntv.pack(side="left", padx=5, pady=5)
 # TimIntv Combobox
-optTimIntv = ["minute1"]
+optTimIntv = ["minute1", "minute3", "minute5", "minute10", "minute15", "minute30", "minute60", "minute240"]
 cmbTimIntv = ttk.Combobox(frameOptionBottom, state="readonly", justify="center", values=optTimIntv, width=12)
 cmbTimIntv.current(0)
 cmbTimIntv.pack(side="left", padx=5, pady=5)
