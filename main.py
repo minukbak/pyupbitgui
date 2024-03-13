@@ -83,7 +83,7 @@ def startTrade():
 
     if myBalance < 0 :
       messageBox.showwarning('프로그램 시작 에러',
-                             'API Key 및 IP 주소가 제대로 등록되어 있는지 확인해 주세요.')
+                             'IP 주소 및 config.json 파일 내 API Key가 제대로 등록되어 있는지 확인해 주세요.')
       return
 
     # fee = 0.05%
