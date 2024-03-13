@@ -64,6 +64,10 @@ def startTrade():
     messageBox.showwarning('거래중 알림', '이미 거래가 진행중입니다. 거래 종료 후 다시 시도해주세요.')
   else :
     upbit = common.utils.accessUpbit()
+    if upbit == False :
+      messageBox.showwarning('프로그램 시작 에러',
+                             'config.json 파일이 올바른 위치에 존재하는지 확인해주세요.')
+      return
     amount = float(tBoxAmt.get()) # 프로그램 시작 금액
 
     if amount < 10000 :
