@@ -41,6 +41,9 @@ def openFile():
   return
 
 def saveFile():
+  if (os.path.exists("txnLogs") == False) :
+    os.mkdir("txnLogs")
+
   # 거래 이력이 있을 경우에만 파일 저장
   if txtHead.get("1.0", END).strip() + txtBottom.get("1.0", END).strip():
     logsDirPath = os.path.dirname(os.path.abspath(__file__)) + "\\txnLogs\\"
