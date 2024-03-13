@@ -1,6 +1,6 @@
 {
   "DEFAULT": {
-    "ACCESS_KEY": "AAAAAAAAAAbbbbbbbbbbCCCCCCCCCCdddddddddd",
-    "SECRET_KEY": "aaaaaaaaaaBBBBBBBBBBccccccccccDDDDDDDDDD"
+    "ACCESS_KEY": "",
+    "SECRET_KEY": ""
   }
 }
